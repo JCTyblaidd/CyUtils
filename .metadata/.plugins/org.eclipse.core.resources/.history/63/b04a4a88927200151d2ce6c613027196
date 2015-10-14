@@ -1,0 +1,13 @@
+package com.oly.web;
+
+public class WebScraper {
+
+	
+	public WebScraper(String url) {
+		
+		
+		
+	}
+	
+	
+}

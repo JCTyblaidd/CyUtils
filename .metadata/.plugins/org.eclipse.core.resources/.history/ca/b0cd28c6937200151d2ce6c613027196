@@ -1,0 +1,23 @@
+package com.oly.web;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+
+public class WebScraper {
+	
+	public String URL;
+	public URI uri;
+	
+	
+	public WebScraper(String url) {
+		URL = url;
+		try {
+			uri = new URI(url);
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+			Logger.instance.SEVERE("Failed URL Connection => " + url);
+		}
+	}
+	
+	
+}
