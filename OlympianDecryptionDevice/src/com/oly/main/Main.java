@@ -4,6 +4,7 @@ public class Main implements Runnable{
 	
 	public static Main MASTER;
 	private String[] params;
+	private boolean isStopped = false;
 	
 	public static void main(String[] args) { //QUICK SPIN OFF FUNCTION
 		MASTER = new Main(args);
@@ -14,7 +15,11 @@ public class Main implements Runnable{
 		this.params = params;
 	}
 	
+	public void STOP() {
+		isStopped = true;
+	}
 	
+	@SuppressWarnings("unused")
 	private boolean arg(String arg) {
 		for(String param : params) {
 			if(param == arg) {
@@ -29,7 +34,7 @@ public class Main implements Runnable{
 		while(true) {
 			//TODO do stuff and spin off
 			
-			if(false) {//Add end contitional - linked to window
+			if(!isStopped) {//Add end contitional - linked to window
 				break;
 			}
 		}
