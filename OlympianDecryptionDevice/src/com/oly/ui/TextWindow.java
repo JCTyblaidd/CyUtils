@@ -48,6 +48,7 @@ public class TextWindow implements ITextUI{
 		frame.getContentPane().add(scroll,BorderLayout.NORTH);
 		//
 		exec.addActionListener(new TextWindowHandler(this,input));
+		input.addActionListener(new TextWindowHandler(this,input));
 		//
 		frame.setVisible(true);
 		output.setEditable(false);
