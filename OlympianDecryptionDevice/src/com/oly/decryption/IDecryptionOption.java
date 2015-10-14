@@ -7,4 +7,7 @@ package com.oly.decryption;
  */
 public interface IDecryptionOption {
 	
+	
+	public void tryDecrypt(String str);
+	
 }

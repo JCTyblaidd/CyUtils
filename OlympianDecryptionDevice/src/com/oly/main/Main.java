@@ -1,5 +1,7 @@
 package com.oly.main;
 
+import com.oly.util.Logger;
+
 public class Main implements Runnable{
 	
 	public static Main MASTER;
@@ -8,6 +10,7 @@ public class Main implements Runnable{
 	
 	public static void main(String[] args) { //QUICK SPIN OFF FUNCTION
 		MASTER = new Main(args);
+		Logger.instance.init_logger();
 		MASTER.run();
 	}
 	
@@ -34,6 +37,10 @@ public class Main implements Runnable{
 		while(true) {
 			//TODO do stuff and spin off
 			
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+			}
 			if(!isStopped) {//Add end contitional - linked to window
 				break;
 			}
