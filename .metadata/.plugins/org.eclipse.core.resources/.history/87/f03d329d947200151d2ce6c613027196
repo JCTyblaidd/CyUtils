@@ -1,0 +1,13 @@
+package com.oly.threading;
+
+public class SmartThread {
+	
+	public ISmartThreadable wrapper;
+	
+	
+	public SmartThread(ISmartThreadable thread) {
+		
+	}
+	
+	
+}

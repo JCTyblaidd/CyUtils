@@ -1,0 +1,33 @@
+package com.oly.main;
+
+public class Main implements Runnable{
+	
+	public static Main;
+	private String[] params;
+	
+	public static void main(String[] args) {
+		
+	}
+	
+	protected Main(String[] params) {
+		
+	}
+	
+	
+	private boolean arg(String arg) {
+		
+	}
+
+	@Override
+	public void run() {
+		while(true) {
+			//TODO do stuff and spin off
+			
+			if(false) {//Add end contitional - linked to window
+				break;
+			}
+		}
+		
+	}
+	
+}

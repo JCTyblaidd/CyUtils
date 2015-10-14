@@ -1,0 +1,10 @@
+package com.oly.decryption;
+
+/**
+ * 
+ * @author laptop
+ *
+ */
+public interface IDecryptionOption {
+	
+}

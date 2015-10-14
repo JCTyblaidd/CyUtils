@@ -1,0 +1,17 @@
+package com.oly.main;
+
+public class Main {
+	
+	public static final Main MainLoop = new Main();
+	private String[] main();
+	
+	public static void main(String[] args) {
+		
+	}
+	
+	
+	private boolean arg(String arg) {
+		
+	}
+	
+}

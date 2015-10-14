@@ -1,0 +1,26 @@
+package com.oly.threading;
+
+public class SmartThread implements Runnable{
+	
+	public ISmartThreadable wrapper;
+	
+	
+	public SmartThread(ISmartThreadable thread) {
+		
+	}
+	
+	public void Pause() {
+		
+	}
+	
+	public void Pause() {
+		
+	}
+
+	@Override
+	public void run() {
+		
+	}
+	
+	
+}
