@@ -1,0 +1,11 @@
+package com.oly.threading;
+
+public interface ISmartThreadable {
+	
+	
+	public boolean Execute() {
+		
+	}
+	
+	
+}

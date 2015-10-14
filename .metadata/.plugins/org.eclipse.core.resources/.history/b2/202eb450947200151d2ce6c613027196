@@ -1,0 +1,15 @@
+package com.oly.decryption;
+
+public class DecryptionManager {
+	
+	
+	public String target;
+	
+	public DecryptionManager(String str) {
+		target = str;
+	}
+	
+	
+	
+	
+}

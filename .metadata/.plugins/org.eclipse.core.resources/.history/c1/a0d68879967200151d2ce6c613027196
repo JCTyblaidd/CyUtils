@@ -1,0 +1,15 @@
+package com.oly.main;
+
+public class Main {
+	
+	
+	public static void main(String[] args) {
+		
+	}
+	
+	
+	private boolean arg(String arg) {
+		
+	}
+	
+}

@@ -1,0 +1,11 @@
+package com.oly.util;
+
+public class Logger {
+	
+	
+	public static final Loggger.instance;
+	
+	
+	
+	
+}
