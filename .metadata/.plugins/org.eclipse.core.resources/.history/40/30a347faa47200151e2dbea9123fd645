@@ -19,7 +19,6 @@ public class Main implements Runnable{
 		isStopped = true;
 	}
 	
-	@SuppressWarnings("unused")
 	private boolean arg(String arg) {
 		for(String param : params) {
 			if(param == arg) {
@@ -34,7 +33,7 @@ public class Main implements Runnable{
 		while(true) {
 			//TODO do stuff and spin off
 			
-			if(!isStopped) {//Add end contitional - linked to window
+			if(isStopped) {//Add end contitional - linked to window
 				break;
 			}
 		}
