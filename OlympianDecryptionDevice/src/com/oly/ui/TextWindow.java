@@ -49,8 +49,9 @@ public class TextWindow implements ITextUI{
 	
 	
 	@Override
-	public void isClosed() {
+	public boolean isClosed() {
 		//TODO fix
+		return frame.isActive(); //TODO check if correct
 	}
 
 	@Override
