@@ -97,6 +97,14 @@ public class TextWindow implements ITextUI{
 	public void writeLine(String str) {
 		write(str + '\n');
 	}
+	
+	public void write_col(String str,Color c) {
+		writeWithColor(str, c);
+	}
+	
+	public void writeLine_col(String str, Color c) {
+		write_col(str + '\n',c);
+	}
 
 	@Override
 	public String getInput() {
