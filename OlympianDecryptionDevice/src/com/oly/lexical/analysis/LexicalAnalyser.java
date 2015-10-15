@@ -14,6 +14,7 @@ public class LexicalAnalyser {
 	}
 	
 	
+	@SuppressWarnings("unused")
 	private enum Language {
 		
 		

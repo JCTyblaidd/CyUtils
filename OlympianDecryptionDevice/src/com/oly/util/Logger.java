@@ -2,6 +2,7 @@ package com.oly.util;
 
 import java.awt.Color;
 
+import com.oly.ui.SystemWrappedTextWindow;
 import com.oly.ui.TextWindow;
 
 public class Logger {
@@ -16,7 +17,7 @@ public class Logger {
 	}
 	
 	public void init_logger() {
-		console = new TextWindow("Debug Console");
+		console = new SystemWrappedTextWindow("Debug Console");
 	}
 	
 	public void LOG(Color color,String str,Object... objs) {
