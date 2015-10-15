@@ -2,13 +2,18 @@ package com.oly.util;
 
 import java.awt.Color;
 
+import com.oly.threading.SmartThread;
+import com.oly.ui.SystemWrappedTextWindow;
 import com.oly.ui.TextWindow;
+import com.oly.util.command.StopProgramCommand;
 
 public class Logger {
 	
 	
 	public static final Logger instance = new Logger();
 	public TextWindow console;
+	public TextWindowCommandManager commands;
+	public SmartThread command_thread;
 	
 	private Logger() {	
 		//Add window constructer and stuff
@@ -16,7 +21,17 @@ public class Logger {
 	}
 	
 	public void init_logger() {
-		console = new TextWindow("Debug Console");
+		console = new SystemWrappedTextWindow("Debug Console");
+		commands = new TextWindowCommandManager(console);
+		command_thread = new SmartThread(commands);
+		command_thread.Start();
+		//Register All Commands Here
+		registerLogger(new StopProgramCommand());
+		
+	}
+	
+	public void registerLogger(ITextWindowCommand command) {
+		commands.commands.add(command);
 	}
 	
 	public void LOG(Color color,String str,Object... objs) {

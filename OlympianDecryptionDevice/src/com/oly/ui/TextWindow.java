@@ -25,8 +25,9 @@ public class TextWindow implements ITextUI{
 	public JButton exec;
 	public JScrollPane scroll;
 	//
-	public String out_temp = "";
+	public volatile String out_temp = "";
 	
+	private static final String input_formatting = "";
 	
 	public TextWindow(String name) {
 		frame = new JFrame(name);
@@ -131,7 +132,7 @@ public class TextWindow implements ITextUI{
 			input_box.setText("");
 			link_window.out_temp = temp;
 			//link_window.writeLine("         " + temp);
-			writeWithColor("        "+temp+"\n",Color.RED);
+			writeWithColor(input_formatting+temp+"\n",Color.RED);
 		}
 		
 	}
