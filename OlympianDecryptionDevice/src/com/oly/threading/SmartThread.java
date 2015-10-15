@@ -1,5 +1,8 @@
 package com.oly.threading;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SmartThread implements Runnable{
 	
 	public ISmartThreadable wrapper;
@@ -8,6 +11,16 @@ public class SmartThread implements Runnable{
 	private boolean isStopped = false;
 	private boolean rate_lim = false;
 	private int rate = 0;
+	///
+	///
+	public static List<SmartThread> threads = new ArrayList<SmartThread>();
+	///
+	
+	public static void TerminateThreads() {
+		for(SmartThread t : threads) {
+			t.Stop();
+		}
+	}
 	
 	public SmartThread(ISmartThreadable thread,String[] params) {
 		wrapper = thread;
@@ -15,6 +28,7 @@ public class SmartThread implements Runnable{
 		this.thread = new Thread(this);
 		rate_lim = wrapper.is_rate_limited();
 		rate = wrapper.get_tick_rate();
+		threads.add(this);
 	}
 	
 	public SmartThread(ISmartThreadable thread) {
@@ -60,7 +74,9 @@ public class SmartThread implements Runnable{
 	@Override
 	public void run() { 
 		while(!isStopped) {
-			wrapper.Execute(paramaters);
+			if(!wrapper.Execute(paramaters)){
+				this.Stop();
+			}
 			if(rate_lim) {
 				this.Pause(rate);
 			}
