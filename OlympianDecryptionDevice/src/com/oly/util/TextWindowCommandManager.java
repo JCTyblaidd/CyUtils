@@ -3,12 +3,11 @@ package com.oly.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.oly.threading.ISmartThreadable;
 import com.oly.ui.TextWindow;
 
 
 
-public class TextWindowCommandManager implements ISmartThreadable{
+public class TextWindowCommandManager{
 	
 	
 	public volatile List<ITextWindowCommand> commands = new ArrayList<ITextWindowCommand>();
@@ -16,39 +15,35 @@ public class TextWindowCommandManager implements ISmartThreadable{
 	public TextWindowCommandManager(TextWindow link) {
 		linked = link;
 	}
+	public TextWindowCommandManager() {
+		//NADA requires stuff
+		linked = null;
+	}
 
-	@Override
-	public boolean Execute(String[] params) {
-		String str = linked.out_temp;
+	
+	public boolean Handle_Command(String str) {
 		if(str != null && str != "" & str != "") {
-			linked.writeLine("TEMP");
 			for(ITextWindowCommand command : commands) {
-				String init_command = str.substring(0, str.indexOf(" ")).trim();
+				String init_command = "";
+				
 				if(str.indexOf(" ") == -1) {
 					init_command = str;
+				}else {
+					init_command = str.substring(0, str.indexOf(" ")).trim();
 				}
-				linked.write("==DEBUG: found command");
-				if(command.getName() == init_command) {
+				if(command.getName().toLowerCase().trim().equals(init_command.toLowerCase().trim())) {
+					if(str.indexOf(" ") == -1) {
+						command.run(new String[]{""},linked);
+					}
+					try {
 					command.run(str.substring(str.indexOf(" "),str.length()-1).split(" "), linked);
+					}catch(Exception e) {
+						command.run(new String[]{""}, linked);
+					}
 				}
 			}
 		}
-		linked.out_temp = null;
 		return true;
 	}
-	
-	
-	
-	//IGNORE///////////////////////////////////////////////////////////////
-	@Override
-	public int get_tick_rate() {
-		return 0;
-	}
-
-	@Override
-	public boolean is_rate_limited() {
-		return false;
-	}
-	
 	
 }
