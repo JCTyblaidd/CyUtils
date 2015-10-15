@@ -20,9 +20,9 @@ public class FrequencyAnalyser {
 		
 		for(char c : data.toCharArray()) {
 			if(results.containsKey(c)) {
-				results.put(c,1);
-			}else {
 				results.put(c, results.get(c) + 1);
+			}else {
+				results.put(c,1);
 			}
 		}
 	}
