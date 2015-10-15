@@ -80,7 +80,9 @@ public class TextWindow implements ITextUI{
         }
 	}
 	
-	
+	public boolean handleNewInput(String str) {
+		return false;
+	}
 	
 	@Override
 	public boolean isClosed() {
@@ -130,7 +132,9 @@ public class TextWindow implements ITextUI{
 		public void actionPerformed(ActionEvent e) {
 			String temp = input_box.getText();
 			input_box.setText("");
-			link_window.out_temp = temp;
+			if(!link_window.handleNewInput(temp)) {
+				link_window.out_temp = temp;
+			}
 			//link_window.writeLine("         " + temp);
 			writeWithColor(input_formatting+temp+"\n",Color.RED);
 		}
