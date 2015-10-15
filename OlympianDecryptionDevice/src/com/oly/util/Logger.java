@@ -10,8 +10,8 @@ public class Logger {
 	
 	
 	public static final Logger instance = new Logger();
-	public TextWindow console;
-	public TextWindowCommandManager commands;
+	public volatile TextWindow console;
+	public volatile TextWindowCommandManager commands;
 	
 	private Logger() {	
 		//Add window constructer and stuff
