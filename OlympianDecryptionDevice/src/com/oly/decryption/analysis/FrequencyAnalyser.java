@@ -1,14 +1,16 @@
 package com.oly.decryption.analysis;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class FrequencyAnalyser {
-	
+
 	HashMap<Character, Float> standard = new HashMap<Character, Float>();
 
 	public static void main(String[] args) {
-		FrequencyAnalyser f = new FrequencyAnalyser("HARRY, SORRY TO DRAG YOU BACK IN , WE WERE HOPING TO GIVE YOU SOME TIME OFF AFTER THE LAST CASE, BUT SOMETHING CAME UP AND WE NEED YOUR HELP.AT A MEETING OF THE FOUR POWERS ALLIED CONTROL COUNCIL TWO WEEKS AGO THE FRENCH ACCUSED THE RUSSIANS OF SHELTERING A NAZI MEDIC KNOWN AS THE REICHSDOKTOR. APPARENTLY THEY INTERCEPTED A MORSE CODE RADIO BROADCAST FROM THE RUSSIAN SECTOR OF BERLIN IN WHICH THE DOCTOR WAS OFFERING INTELLIGENCE ABOUT THE RATLINES IN EXCHANGE FOR ASYLUM. THE RUSSIANS CLAIMED NOT TO KNOW ANYTHING ABOUT IT, AND MAYBE THEY ARE TELLING THE TRUTH, BUT THINGS HAVE BEEN A LITTLE FROSTY SINCE TRUMAN'S SPEECH ON MARCH TWELFTH AND WE REALLY DON'T NEED MORE CONFLICT RIGHT NOW. WE FIGURE WITH YOUR CONTACTS OVER HERE YOU MIGHT BE ABLE TO FIND OUT IF THE RUSSIANS ARE TELLING THE TRUTH. I HAVE ATTACHED THE ENCRYPTED TRANSCRIPT OF THE BROADCAST. CHARLIE");
+		FrequencyAnalyser f = new FrequencyAnalyser("TMDDK, EADDK FA PDMS KAG NMOW UZ , IQ IQDQ TABUZS FA SUHQ KAG EAYQ FUYQ ARR MRFQD FTQ XMEF OMEQ, NGF EAYQFTUZS OMYQ GB MZP IQ ZQQP KAGD TQXB. MF M YQQFUZS AR FTQ RAGD BAIQDE MXXUQP OAZFDAX OAGZOUX FIA IQQWE MSA FTQ RDQZOT MOOGEQP FTQ DGEEUMZE AR ETQXFQDUZS M ZMLU YQPUO WZAIZ ME FTQ DQUOTEPAWFAD. MBBMDQZFXK FTQK UZFQDOQBFQP M YADEQ OAPQ DMPUA NDAMPOMEF RDAY FTQ DGEEUMZ EQOFAD AR NQDXUZ UZ ITUOT FTQ PAOFAD IME ARRQDUZS UZFQXXUSQZOQ MNAGF FTQ DMFXUZQE UZ QJOTMZSQ RAD MEKXGY. FTQ DGEEUMZE OXMUYQP ZAF FA WZAI MZKFTUZS MNAGF UF, MZP YMKNQ FTQK MDQ FQXXUZS FTQ FDGFT, NGF FTUZSE TMHQ NQQZ M XUFFXQ RDAEFK EUZOQ FDGYMZ'E EBQQOT AZ YMDOT FIQXRFT MZP IQ DQMXXK PAZ'F ZQQP YADQ OAZRXUOF DUSTF ZAI. IQ RUSGDQ IUFT KAGD OAZFMOFE AHQD TQDQ KAG YUSTF NQ MNXQ FA RUZP AGF UR FTQ DGEEUMZE MDQ FQXXUZS FTQ FDGFT. U TMHQ MFFMOTQP FTQ QZODKBFQP FDMZEODUBF AR FTQ NDAMPOMEF. OTMDXUQ");
 		f.Analyse();
 		System.out.println(f.standard.toString());
 		f.getPotentials(f.standard, f.frequencies());
@@ -30,10 +32,12 @@ public class FrequencyAnalyser {
 		}
 
 		for(char c : data.toCharArray()) {
-			if(results.containsKey(c)) {
-				results.put(c, results.get(c) + 1);
-			}else {
-				results.put(c,1);
+			if (alphabet.toLowerCase().contains(String.valueOf(c)) || alphabet.contains(String.valueOf(c))) {
+				if(results.containsKey(c)) {
+					results.put(c, results.get(c) + 1);
+				}else {
+					results.put(c,1);
+				}
 			}
 		}
 	}
@@ -53,27 +57,34 @@ public class FrequencyAnalyser {
 		for (Character c : results.keySet()) {
 			percentage.put(c, ((results.get(c)/((float)total))*100));
 		}
-		System.out.println(percentage.toString());
 		return percentage;
 	}
-	
+
 	public void getPotentials(HashMap<Character, Float> expected, HashMap<Character, Float> acquired) {
-		HashMap<Character, ArrayList<Character>> potentialValues = new HashMap<Character, ArrayList<Character>>();
-		for (Character c : acquired.keySet()) {
-			for (Character d : expected.keySet()) {
-				if (Math.abs(acquired.get(c) - expected.get(d)) < 0.5) {
-					if (potentialValues.get(c) != null) {
-						potentialValues.get(c).add(d);
-					} else {
-						potentialValues.put(c, new ArrayList<Character>());
-						potentialValues.get(c).add(d);
-					}
-				}
-			}
+		HashMap<Character, Character> potentialValues = new HashMap<Character, Character>();
+		ArrayList<Float> numbers = new ArrayList<Float>();
+		for (float f : acquired.values()) {
+			numbers.add(f);
+		}
+		ArrayList<Float> std = new ArrayList<Float>();
+		for (float n : expected.values()) {
+			std.add(n);
+		}
+		System.out.println(std.toString());
+		System.out.println(numbers.toString());
+		for (; 0 < numbers.size();) {
+			float f = Collections.max((Collection<Float>) numbers);
+			float n = Collections.max((Collection<Float>) std);
+			potentialValues.put((char)getKey(acquired, f), (char)getKey(expected, n));
+			numbers.remove(f);
+			std.remove(n);
+		}
+		for (char c : data.toCharArray()) {
+			System.out.print((potentialValues.get(c) == null ? "-" : potentialValues.get(c)));
 		}
 		System.out.println(potentialValues.toString());
 	}
-	
+
 	private void populateInefficiently() {
 		standard.put('A', 8.2f);
 		standard.put('B', 1.5f);
@@ -102,5 +113,13 @@ public class FrequencyAnalyser {
 		standard.put('Y', 2.0f);
 		standard.put('Z', 0.1f);
 	}
-	
+
+	private Object getKey(HashMap<Character, Float> map, Float value) {
+		for(Object key : map.keySet()){
+			if(map.get(key).equals(value)){
+				return key;
+			}
+		}
+		return null;
+	}
 }
