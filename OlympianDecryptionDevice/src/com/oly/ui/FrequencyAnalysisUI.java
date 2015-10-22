@@ -1,6 +1,7 @@
 package com.oly.ui;
 
 import java.awt.Dimension;
+import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -52,10 +53,21 @@ public class FrequencyAnalysisUI implements IUI {
 		
 		frame.setResizable(false);
 		///
-		table.setRowHeight(50);
+		table.setRowHeight(35);
 		
 		//TODO add action button stuff (so that they do something)
+		analysis.Analyse();
+		final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		HashMap<Character,Character> potents = analysis.guess_potentials();
+		System.out.println(potents);
+		for(int v = 0; v < alphabet.length(); v++) {
+			table.setValueAt(alphabet.charAt(v), v, 0);
+			table.setValueAt(potents.get(alphabet.charAt(v)),v,1);
+		}
 		
+		
+		
+		//Analyser.getPotentials(analyser.standard,analyser.frequencies());
 		
 	}
 	

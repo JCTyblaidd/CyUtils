@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class FrequencyAnalyser {
 
-	HashMap<Character, Float> standard = new HashMap<Character, Float>();
+	public HashMap<Character, Float> standard = new HashMap<Character, Float>();
 
 	public static void main(String[] args) {
 		FrequencyAnalyser f = new FrequencyAnalyser("TMDDK, EADDK FA PDMS KAG NMOW UZ , IQ IQDQ TABUZS FA SUHQ KAG EAYQ FUYQ ARR MRFQD FTQ XMEF OMEQ, NGF EAYQFTUZS OMYQ GB MZP IQ ZQQP KAGD TQXB. MF M YQQFUZS AR FTQ RAGD BAIQDE MXXUQP OAZFDAX OAGZOUX FIA IQQWE MSA FTQ RDQZOT MOOGEQP FTQ DGEEUMZE AR ETQXFQDUZS M ZMLU YQPUO WZAIZ ME FTQ DQUOTEPAWFAD. MBBMDQZFXK FTQK UZFQDOQBFQP M YADEQ OAPQ DMPUA NDAMPOMEF RDAY FTQ DGEEUMZ EQOFAD AR NQDXUZ UZ ITUOT FTQ PAOFAD IME ARRQDUZS UZFQXXUSQZOQ MNAGF FTQ DMFXUZQE UZ QJOTMZSQ RAD MEKXGY. FTQ DGEEUMZE OXMUYQP ZAF FA WZAI MZKFTUZS MNAGF UF, MZP YMKNQ FTQK MDQ FQXXUZS FTQ FDGFT, NGF FTUZSE TMHQ NQQZ M XUFFXQ RDAEFK EUZOQ FDGYMZ'E EBQQOT AZ YMDOT FIQXRFT MZP IQ DQMXXK PAZ'F ZQQP YADQ OAZRXUOF DUSTF ZAI. IQ RUSGDQ IUFT KAGD OAZFMOFE AHQD TQDQ KAG YUSTF NQ MNXQ FA RUZP AGF UR FTQ DGEEUMZE MDQ FQXXUZS FTQ FDGFT. U TMHQ MFFMOTQP FTQ QZODKBFQP FDMZEODUBF AR FTQ NDAMPOMEF. OTMDXUQ");
@@ -16,8 +16,8 @@ public class FrequencyAnalyser {
 		f.getPotentials(f.standard, f.frequencies());
 	}
 
-	String data;
-	HashMap<Character,Integer> results = new HashMap<Character,Integer>();
+	public String data;
+	public HashMap<Character,Integer> results = new HashMap<Character,Integer>();
 
 	public FrequencyAnalyser(String str) {
 		data = str;
@@ -60,7 +60,7 @@ public class FrequencyAnalyser {
 		return percentage;
 	}
 
-	public void getPotentials(HashMap<Character, Float> expected, HashMap<Character, Float> acquired) {
+	public HashMap<Character,Character> getPotentials(HashMap<Character, Float> expected, HashMap<Character, Float> acquired) {
 		HashMap<Character, Character> potentialValues = new HashMap<Character, Character>();
 		ArrayList<Float> numbers = new ArrayList<Float>();
 		for (float f : acquired.values()) {
@@ -83,7 +83,13 @@ public class FrequencyAnalyser {
 			System.out.print((potentialValues.get(c) == null ? "-" : potentialValues.get(c)));
 		}
 		System.out.println(potentialValues.toString());
+		return potentialValues;
 	}
+	
+	public HashMap<Character,Character> guess_potentials() {
+		return getPotentials(this.standard,this.frequencies());
+	}
+	
 
 	private void populateInefficiently() {
 		standard.put('A', 8.2f);
