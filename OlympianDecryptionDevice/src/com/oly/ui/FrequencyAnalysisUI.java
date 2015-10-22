@@ -27,7 +27,7 @@ public class FrequencyAnalysisUI implements IUI {
 		frame = new JFrame(name);
 		table = new JTable(26,8); //TODO get data loading
 		scroll = new JScrollPane (table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		button1 = new JButton("BUTTON_1");
+		button1 = new JButton("Decrypt [NADA]");
 		button2 = new JButton("BUTTON_2");
 		button3 = new JButton("BUTTON_3");
 		button4 = new JButton("BUTTON_4");
@@ -49,17 +49,19 @@ public class FrequencyAnalysisUI implements IUI {
 		button4.setBounds(550,505,150,30);
 		//
 		frame.setVisible(true);
-		table.setEnabled(false); //MAKE BETTER LAZY JOB
+		table.setEnabled(true); //MAKE BETTER LAZY JOB //ALLOW EDITING
 		
 		frame.setResizable(false);
 		///
-		table.setRowHeight(35);
+		table.setRowHeight(18);
 		
 		//TODO add action button stuff (so that they do something)
 		analysis.Analyse();
 		final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		HashMap<Character,Character> potents = analysis.guess_potentials();
 		System.out.println(potents);
+		//table.setValueAt("Char", 0, 0);
+		//table.setValueAt("TO", 0, 1);
 		for(int v = 0; v < alphabet.length(); v++) {
 			table.setValueAt(alphabet.charAt(v), v, 0);
 			table.setValueAt(potents.get(alphabet.charAt(v)),v,1);
