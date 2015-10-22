@@ -65,7 +65,7 @@ public class FrequencyAnalysisUI implements IUI {
 		//TABLE
 		analysis.Analyse();
 		final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-		HashMap<Character,Character> potents = analysis.guess_potentials();
+		HashMap<Character,Character> potents = (HashMap<Character, Character>) analysis.getGuess_HIGH();//analysis.guess_potentials();
 		HashMap<Character,Float> freq = analysis.frequencies();
 		System.out.println(potents);
 		//table.setValueAt("Char", 0, 0);
@@ -92,6 +92,8 @@ public class FrequencyAnalysisUI implements IUI {
 		return true; //SHOULDN@T BE CALLED YET
 	}
 	
+	
+	
 	protected class DecryptButtonListener implements ActionListener {
 		
 		public FrequencyAnalysisUI link;
@@ -99,6 +101,7 @@ public class FrequencyAnalysisUI implements IUI {
 		public DecryptButtonListener(FrequencyAnalysisUI ui) {
 			link = ui;
 		}
+		
 		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
@@ -109,22 +112,12 @@ public class FrequencyAnalysisUI implements IUI {
 			for(int v = 0; v < 26; v++) {
 				info.put((char)link.table.getValueAt(v, 0), 
 						(char)link.table.getValueAt(v, 1));
-				
-				String output = KeyDecrypter.decrypt(link.analyser.data, info);
-				
-				new TranslationUI(arg0.getActionCommand() + " :: " + output);
-				
 			}
+			String output = KeyDecrypter.decrypt(link.analyser.data, info);
 			
-			
+			new TranslationUI(output);
 			
 		}
-		
-		
-		
-		
-		
-		
 	}
 	
 	
