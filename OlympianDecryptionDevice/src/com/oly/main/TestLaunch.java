@@ -13,8 +13,10 @@ public class TestLaunch {
 	
 	public static void main(String[] args) {
 		
-		Logger.instance.init_logger();
 		
+		
+		Logger.instance.init_logger();
+		Logger.instance.LOG(WebScraper.getChallenge(3, 'A'));
 		Logger.instance.LOG(WebScraper.getChallenge(2, 'A'));
 		Logger.instance.LOG(Color.GREEN, "TEXT #2 [TESTING]");
 		Logger.instance.LOG(WebScraper.getChallenge(2, 'B'));

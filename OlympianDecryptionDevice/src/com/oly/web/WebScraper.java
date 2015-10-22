@@ -16,6 +16,7 @@ public class WebScraper {
 	public String interwebs;
 	public URL url;
 	
+	public static String not_here = "challenge not here yet!";
 	
 	public WebScraper(String loc) {
 		interwebs = loc;
