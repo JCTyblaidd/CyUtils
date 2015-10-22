@@ -8,8 +8,11 @@ public class KeyDecryptionInformation {
 	
 	
 	public HashMap<Character,Character> encrypt = new HashMap<Character,Character>();
+	public String key;
 	
 	public KeyDecryptionInformation(String key) {
+		this.key = key;
+		//BASIC KEY BASED CIPHER
 		char last = ' ';
 		for(int v = 0; v < ALPHABET.length(); v++) {
 			if(v < key.length()) {
@@ -24,6 +27,9 @@ public class KeyDecryptionInformation {
 				last = temp;
 			}
 		}
+		///VIEGNERE CIPHER OPTION
+		
+		
 	}
 	
 	private char getNextInAlphabet(char c) {
@@ -31,6 +37,10 @@ public class KeyDecryptionInformation {
 		loc += 1;
 		loc = loc % ALPHABET.length();
 		return ALPHABET.charAt(loc);
+	}
+	
+	public String decrypt(String message) {
+		return KeyDecrypter.decrypt(message, encrypt);
 	}
 	
 	
