@@ -19,7 +19,7 @@ public class TestLaunch {
 		Logger.instance.LOG(Color.GREEN, "TEXT #2 [TESTING]");
 		Logger.instance.LOG(WebScraper.getChallenge(2, 'B'));
 		
-		FrequencyAnalyser analyser = new FrequencyAnalyser(WebScraper.getChallenge(2, 'B'));
+		FrequencyAnalyser analyser = new FrequencyAnalyser(WebScraper.getChallenge(2, 'A'));
 		//analyser.Analyse();
 		//analyser.getPotentials(analyser.standard,analyser.frequencies());
 		new FrequencyAnalysisUI("Freq Analy Test", analyser);

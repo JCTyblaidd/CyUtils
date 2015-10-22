@@ -1,7 +1,10 @@
 package com.oly.ui;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -9,6 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import com.oly.decryption.analysis.FrequencyAnalyser;
+import com.oly.decryption.key.KeyDecrypter;
 
 public class FrequencyAnalysisUI implements IUI {
 
@@ -56,6 +60,9 @@ public class FrequencyAnalysisUI implements IUI {
 		table.setRowHeight(18);
 		
 		//TODO add action button stuff (so that they do something)
+		button1.addActionListener(new DecryptButtonListener(this));
+		
+		//TABLE
 		analysis.Analyse();
 		final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		HashMap<Character,Character> potents = analysis.guess_potentials();
@@ -66,7 +73,8 @@ public class FrequencyAnalysisUI implements IUI {
 			table.setValueAt(alphabet.charAt(v), v, 0);
 			table.setValueAt(potents.get(alphabet.charAt(v)),v,1);
 		}
-		
+		table.getTableHeader().getColumnModel().getColumn(0).setHeaderValue("Char");
+		table.getTableHeader().getColumnModel().getColumn(1).setHeaderValue("TO");
 		
 		
 		//Analyser.getPotentials(analyser.standard,analyser.frequencies());
@@ -81,5 +89,44 @@ public class FrequencyAnalysisUI implements IUI {
 	public boolean isClosed() {
 		return true; //SHOULDN@T BE CALLED YET
 	}
-
+	
+	protected class DecryptButtonListener implements ActionListener {
+		
+		public FrequencyAnalysisUI link;
+		
+		public DecryptButtonListener(FrequencyAnalysisUI ui) {
+			link = ui;
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			
+			
+			
+			Map<Character,Character> info = new HashMap<Character,Character>();
+			for(int v = 0; v < 26; v++) {
+				info.put((char)link.table.getValueAt(v, 0), 
+						(char)link.table.getValueAt(v, 1));
+				
+				String output = KeyDecrypter.decrypt(link.analyser.data, info);
+				
+				new TranslationUI(arg0.getActionCommand() + " :: " + output);
+				
+			}
+			
+			
+			
+		}
+		
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	
 }
