@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 public class FrequencyAnalyser {
 
@@ -128,4 +129,48 @@ public class FrequencyAnalyser {
 		}
 		return null;
 	}
+	
+	
+	
+	
+	public Map<Character,Character> getGuess_HIGH() {
+		Map<Character,Character> data = new HashMap<Character,Character>();
+		Map<Character,Float> info = frequencies();
+		Map<Character,Float> stand = new HashMap<Character,Float>();
+		//COPY
+		for(char ij : standard.keySet()) {
+			stand.put(ij, standard.get(ij));
+		}
+		System.out.println("DEBUG");
+		System.out.println(stand.toString());
+		System.out.println(info.toString());
+		
+		//String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		for(int v = 0; v < 26; v++) {
+			char c1 = getHighest(stand);
+			char c2 = getHighest(info);
+			data.put(c1, c2);
+			stand.remove(c1);
+			info.remove(c2);
+		}
+		return data;
+	}
+	
+	private char getHighest(Map<Character,Float> m) {
+		char better = ' ';
+		float best = -100f;
+		for(char c : m.keySet()) {
+			if(m.get(c) > best) {
+				better = c;
+				best = m.get(c);
+			}
+		}
+		return better;
+	}
+	
+	
+	
+	
+	
+	
 }
