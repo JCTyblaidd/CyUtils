@@ -8,7 +8,12 @@ public class LexicalAnalyser {
 	 * @return 0.0 - 1.0 depending on how suitable the translation is
 	 */
 	public float rate(String str) {
+		String temp = str.replace(" ", "");
+		//NO SPACES BECAUSE THEY ARE EVIL;
 		
+		//TODO using a seperate thread and a **** TON of resources
+		
+		//GET A LOCAL DICTIONARY AND SEE IF IT IS ENGLISH
 		
 		return 0; 
 	}
