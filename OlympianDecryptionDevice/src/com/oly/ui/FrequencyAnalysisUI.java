@@ -66,16 +66,18 @@ public class FrequencyAnalysisUI implements IUI {
 		analysis.Analyse();
 		final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		HashMap<Character,Character> potents = analysis.guess_potentials();
+		HashMap<Character,Float> freq = analysis.frequencies();
 		System.out.println(potents);
 		//table.setValueAt("Char", 0, 0);
 		//table.setValueAt("TO", 0, 1);
 		for(int v = 0; v < alphabet.length(); v++) {
 			table.setValueAt(alphabet.charAt(v), v, 0);
 			table.setValueAt(potents.get(alphabet.charAt(v)),v,1);
+			table.setValueAt(Integer.toString(Math.round(freq.get(alphabet.charAt(v)))) + "%", v, 2);
 		}
 		table.getTableHeader().getColumnModel().getColumn(0).setHeaderValue("Char");
 		table.getTableHeader().getColumnModel().getColumn(1).setHeaderValue("TO");
-		
+		table.getTableHeader().getColumnModel().getColumn(2).setHeaderValue("FREQ");
 		
 		//Analyser.getPotentials(analyser.standard,analyser.frequencies());
 		
