@@ -110,13 +110,28 @@ public class FrequencyAnalysisUI implements IUI {
 			
 			Map<Character,Character> info = new HashMap<Character,Character>();
 			for(int v = 0; v < 26; v++) {
-				info.put((char)link.table.getValueAt(v, 0), 
-						(char)link.table.getValueAt(v, 1));
+				//info.put((char)link.table.getValueAt(v, 0), 
+						//(char)link.table.getValueAt(v, 1));
+				Object obj1 = link.table.getValueAt(v,0);
+				Object obj2 = link.table.getValueAt(v,1);
+				char c1 = getChar(obj1);
+				char c2 = getChar(obj2);
+				info.put(c1, c2);
 			}
 			String output = KeyDecrypter.decrypt(link.analyser.data, info);
 			
 			new TranslationUI(output);
 			
+		}
+		
+		private char getChar(Object obj) {
+			if(obj instanceof Character) {
+				return (char)obj;
+			}else if(obj instanceof String) {
+				return ((String)obj).charAt(0);
+			}else{
+				return '*';
+			}
 		}
 	}
 	
