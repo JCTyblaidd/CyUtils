@@ -1,7 +1,0 @@
-package com.oly.ui;
-
-interface  I_UI {
-	
-	
-	public void isClosed();
-}

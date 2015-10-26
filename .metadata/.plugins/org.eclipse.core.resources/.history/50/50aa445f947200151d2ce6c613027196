@@ -1,5 +1,0 @@
-package com.oly.threading;
-
-public interface ISmartThreadable {
-
-}
