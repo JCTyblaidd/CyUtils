@@ -2,9 +2,7 @@ package com.oly.main;
 
 import java.awt.Color;
 
-import com.oly.decryption.analysis.FrequencyAnalyser;
 import com.oly.ui.DecryptTextUI;
-import com.oly.ui.FrequencyAnalysisUI;
 import com.oly.util.Logger;
 import com.oly.web.WebScraper;
 
