@@ -9,13 +9,19 @@ import java.awt.event.ActionListener;
 import java.lang.reflect.Method;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.SpinnerListModel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EtchedBorder;
 import javax.swing.plaf.ColorUIResource;
 
 import com.oly.util.Logger;
@@ -37,6 +43,10 @@ public class DecryptTextUI {
 	
 	//TAB1 {"Commands!!! i.e. BUTTONS"}
 	public JPanel tab1;
+	public JProgressBar control_init_progress;
+	public JProgressBar control_freq_progress;
+	public JProgressBar control_alt_progress;
+	public JProgressBar control_lex_progress;
 	
 	
 	//TAB2 plain_text
@@ -45,9 +55,13 @@ public class DecryptTextUI {
 	
 	//Tab3 freq_analysis
 	public JPanel tab3;
+	public JScrollPane freq_scroll;
+	public JTable freq_analysis;
+	public JButton freq_init;
 	
 	//Tab4 alt_cypher cracking
 	public JPanel tab4;
+	public JButton transposition_init;
 	
 	//Tab5 Lexical Option
 	public JPanel tab5;
@@ -59,6 +73,7 @@ public class DecryptTextUI {
 	public JPanel tab6;
 	public JSpinner results_tab;
 	public JSpinner results_num;
+	public JTextArea results_data;
 	
 	
 	public DecryptTextUI(String title,String cypher) {
@@ -78,32 +93,76 @@ public class DecryptTextUI {
 		//TAB1
 		tab1 = new JPanel();
 		tab1.setBounds(0, 0, 840, 510);
-		//tab1.setLayout(null);
+		tab1.setLayout(null);
 		main_tabs.addTab("Control", tab1);
+		control_init_progress = new JProgressBar(SwingConstants.HORIZONTAL, 0, 100);
+		control_freq_progress = new JProgressBar(SwingConstants.HORIZONTAL, 0, 100);
+		control_alt_progress = new JProgressBar(SwingConstants.HORIZONTAL, 0, 100);
+		control_lex_progress = new JProgressBar(SwingConstants.HORIZONTAL, 0, 100);
+		control_init_progress.setBounds(500,100,200,30);
+		control_freq_progress.setBounds(500,150,200,30);
+		control_alt_progress.setBounds(500,200,200,30);
+		control_lex_progress.setBounds(500,250,200,30);
+		control_init_progress.setStringPainted(true);
+		control_freq_progress.setStringPainted(true);
+		control_alt_progress.setStringPainted(true);
+		control_lex_progress.setStringPainted(true);
+		control_init_progress.setString("Initial Analysis");
+		control_freq_progress.setString("Frequential Analysis");
+		control_alt_progress.setString("Alternate Analysis");
+		control_lex_progress.setString("Lexical Analysis");
+		tab1.add(control_init_progress);
+		tab1.add(control_freq_progress);
+		tab1.add(control_alt_progress);
+		tab1.add(control_lex_progress);
+		
 		
 		//TAB2
 		tab2 = new JPanel();
 		tab2.setBounds(0, 0, 840, 510);
-		//tab2.setLayout(null);
+		tab2.setLayout(null);
 		main_tabs.addTab("Plain Text",tab2);
 		plain_cypher = new JTextArea("");
-		//plain_cypher.setBounds(0,0,840,500);
-		size(plain_cypher,830,510);
+		plain_cypher.setBounds(5,5,820,475);
+		//size(plain_cypher,830,510);
 		plain_cypher.setLineWrap(true);
 		plain_cypher.setWrapStyleWord(false);
 		plain_cypher.setText(this.cypher);
 		plain_cypher.setEditable(false);
+		plain_cypher.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED, Color.BLACK,Color.GRAY));
 		tab2.add(plain_cypher);
 		
 		//TAB3
 		tab3 = new JPanel();
+		tab3.setLayout(null);
 		tab3.setBounds(0, 0, 840, 510);
 		main_tabs.addTab("FrequencyAnalysis",tab3);
+		freq_analysis = new JTable(26,6);
+		freq_analysis.getColumnModel().getColumn(0).setHeaderValue("Encrypt: Char");
+		freq_analysis.getColumnModel().getColumn(1).setHeaderValue("Decrypt: Char");
+		freq_analysis.getColumnModel().getColumn(2).setHeaderValue("Decrypt: Freq");
+		freq_analysis.getColumnModel().getColumn(3).setHeaderValue("");
+		freq_analysis.getColumnModel().getColumn(4).setHeaderValue("Norm:Aphabet");
+		freq_analysis.getColumnModel().getColumn(5).setHeaderValue("Norm:Frequency");
+		//freq_analysis.setBounds(200, 5, 500, 475);
+		freq_scroll = new JScrollPane(freq_analysis);
+		freq_scroll.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED, Color.BLACK,Color.GRAY));
+		freq_scroll.setBounds(230,5,600,440);
+		tab3.add(freq_scroll);
+		freq_init = new JButton("Analyse");
+		freq_init.setBounds(230,450,100,30);
+		freq_init.addActionListener(new ReflectionActionHandler(this, "init_freq_analysis"));
+		tab3.add(freq_init);
 		
 		//TAB4
 		tab4 = new JPanel();
+		tab4.setLayout(null);
 		tab4.setBounds(0,0,840,510);
 		main_tabs.addTab("AlterateAnalysis",tab4);
+		transposition_init = new JButton("Brute Force Transposition Cypher");
+		transposition_init.addActionListener(new ReflectionActionHandler(this, "init_brute_transposition_cypher"));
+		transposition_init.setBounds(5,100,250,30);
+		tab4.add(transposition_init);
 		
 		//TAB5
 		tab5 = new JPanel();
@@ -137,6 +196,10 @@ public class DecryptTextUI {
 		results_num.setBounds(10, 35, 150, 20);
 		tab6.add(results_tab,BorderLayout.WEST);
 		tab6.add(results_num,BorderLayout.WEST);
+		results_data = new JTextArea();
+		results_data.setBounds(170, 3, 657, 480);
+		results_data.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED, Color.BLACK,Color.GRAY));
+		tab6.add(results_data);
 	}
 	
 	
@@ -147,14 +210,24 @@ public class DecryptTextUI {
 		c.setMinimumSize(new Dimension(width,height));
 	}
 	
+	/////////////////////////////////UPDATE FUNCTIONALITY//////////////////////////////
+	
+	
 	
 	
 	///////////////////////////////SPIN OFF FUNCTIONALITY////////////////////////////
 	
+	public void init_freq_analysis() {
+		
+		
+	}
 	
 	
-	
-	
+	public void init_brute_transposition_cypher() {
+		
+		
+		
+	}
 	
 	
 	

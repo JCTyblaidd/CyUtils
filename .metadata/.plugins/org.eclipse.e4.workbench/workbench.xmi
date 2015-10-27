@@ -155,13 +155,13 @@
       <tags>categoryTag:Dr. Garbage</tags>
     </sharedElements>
     <sharedElements xsi:type="advanced:Area" xmi:id="_co54GnKOEeWp0clQjGCc0w" elementId="org.eclipse.ui.editorss" selectedElement="_co54G3KOEeWp0clQjGCc0w">
-      <children xsi:type="basic:PartStack" xmi:id="_co54G3KOEeWp0clQjGCc0w" elementId="org.eclipse.e4.primaryDataStack" selectedElement="_y94vcHv4EeWvvcEYH81K6w">
+      <children xsi:type="basic:PartStack" xmi:id="_co54G3KOEeWp0clQjGCc0w" elementId="org.eclipse.e4.primaryDataStack" selectedElement="_qDyw8Hy2EeWnLpYt_9xjrg">
         <tags>newtablook</tags>
         <tags>org.eclipse.e4.primaryDataStack</tags>
         <tags>EditorStack</tags>
         <tags>active</tags>
-        <children xsi:type="basic:Part" xmi:id="_y94vcHv4EeWvvcEYH81K6w" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="DecryptTextUI.java" iconURI="platform:/plugin/org.eclipse.jdt.ui/icons/full/obj16/jcu_obj.gif" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;DecryptTextUI.java&quot; partName=&quot;DecryptTextUI.java&quot; title=&quot;DecryptTextUI.java&quot; tooltip=&quot;OlympianDecryptionDevice/src/com/oly/ui/DecryptTextUI.java&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/OlympianDecryptionDevice/src/com/oly/ui/DecryptTextUI.java&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;2757&quot; selectionTopPixel=&quot;1737&quot;/>&#xD;&#xA;&lt;/editor>"/>
+        <children xsi:type="basic:Part" xmi:id="_qDyw8Hy2EeWnLpYt_9xjrg" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="DecryptTextUI.java" iconURI="platform:/plugin/org.eclipse.jdt.ui/icons/full/obj16/jcu_obj.gif" closeable="true">
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;DecryptTextUI.java&quot; partName=&quot;DecryptTextUI.java&quot; title=&quot;DecryptTextUI.java&quot; tooltip=&quot;OlympianDecryptionDevice/src/com/oly/ui/DecryptTextUI.java&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/OlympianDecryptionDevice/src/com/oly/ui/DecryptTextUI.java&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;2975&quot; selectionTopPixel=&quot;1224&quot;/>&#xD;&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>org.eclipse.jdt.ui.CompilationUnitEditor</tags>
           <tags>removeOnHide</tags>
@@ -313,7 +313,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_co544XKOEeWp0clQjGCc0w" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_0BzL4HvqEeWvvcEYH81K6w" elementId="print" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" enabled="false" command="_co-KQnKOEeWp0clQjGCc0w"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_cYQK0HyyEeWnLpYt_9xjrg" elementId="print" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" enabled="false" command="_co-KQnKOEeWp0clQjGCc0w"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_co5473KOEeWp0clQjGCc0w" elementId="additions" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -337,7 +337,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_co55J3KOEeWp0clQjGCc0w" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_0B-yEHvqEeWvvcEYH81K6w" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_co-JvHKOEeWp0clQjGCc0w"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_cYZUwXyyEeWnLpYt_9xjrg" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_co-JvHKOEeWp0clQjGCc0w"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_co55MnKOEeWp0clQjGCc0w" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>
