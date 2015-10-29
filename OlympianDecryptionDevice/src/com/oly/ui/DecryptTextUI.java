@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Method;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -22,8 +23,13 @@ import javax.swing.JTextArea;
 import javax.swing.SpinnerListModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.plaf.ColorUIResource;
 
+import com.oly.threading.FrequencyAnalysisTask;
+import com.oly.threading.SmartThread;
+import com.oly.threading.TranspositionBruteTask;
 import com.oly.util.Logger;
 
 
@@ -36,6 +42,18 @@ import com.oly.util.Logger;
 public class DecryptTextUI {
 	
 	public final String cypher;
+	
+	public volatile List<String> possibilities_freq;
+	public volatile List<String> lexical_accepted_freq;
+	public volatile boolean poss_dirty_freq = true;
+	///
+	public volatile List<String> possibilities_trans;
+	public volatile List<String> lexical_accepted_trans;
+	public volatile boolean poss_dirty_trans;
+	///
+	public volatile List<String> possibilities_poly;
+	public volatile List<String> lexical_accepted_poly;
+	public volatile boolean poss_dirty_poly;
 	
 	//UI elements
 	public JFrame main_window;
@@ -73,6 +91,7 @@ public class DecryptTextUI {
 	public JPanel tab6;
 	public JSpinner results_tab;
 	public JSpinner results_num;
+	public JCheckBox results_use_filtered;
 	public JTextArea results_data;
 	
 	
@@ -192,10 +211,17 @@ public class DecryptTextUI {
 		main_tabs.addTab("Results",tab6);
 		results_tab = new JSpinner(new SpinnerListModel(new String[]{"Frequency Analysis","Transposition","Polyaphabetic"}));
 		results_num = new JSpinner();
+		results_use_filtered = new JCheckBox();
 		results_tab.setBounds(10, 10, 150, 20);
 		results_num.setBounds(10, 35, 150, 20);
+		results_use_filtered.setBounds(10,50,150,20);
+		results_use_filtered.setText("Use filtered? ");
+		results_tab.addChangeListener(new ReflectionChangeHandler(this, "refresh_results_page"));
+		results_num.addChangeListener(new ReflectionChangeHandler(this, "refresh_results_page"));
+		results_use_filtered.addChangeListener(new ReflectionChangeHandler(this, "refresh_results_page"));
 		tab6.add(results_tab,BorderLayout.WEST);
 		tab6.add(results_num,BorderLayout.WEST);
+		tab6.add(results_use_filtered,BorderLayout.WEST);
 		results_data = new JTextArea();
 		results_data.setBounds(170, 3, 657, 480);
 		results_data.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED, Color.BLACK,Color.GRAY));
@@ -218,20 +244,25 @@ public class DecryptTextUI {
 	///////////////////////////////SPIN OFF FUNCTIONALITY////////////////////////////
 	
 	public void init_freq_analysis() {
-		
-		
+		SmartThread.runRunnable(new FrequencyAnalysisTask(this));
 	}
 	
 	
 	public void init_brute_transposition_cypher() {
-		
-		
+		SmartThread.runRunnable(new TranspositionBruteTask(this));
+	}
+	
+	public void init_lexical_analysis() {
 		
 	}
 	
+	public void refresh_results_page() {
+		
+	}
 	
-	
-	
+	public void export_unfiltered() {
+		
+	}
 	
 	
 	
@@ -279,6 +310,37 @@ public class DecryptTextUI {
 		
 	}
 	
-	
+	protected class ReflectionChangeHandler implements ChangeListener {
+		
+		public DecryptTextUI link;
+		public String linked_function;
+		private Method function;
+		
+		public ReflectionChangeHandler(DecryptTextUI link,String funct) {
+			this.link = link;
+			this.linked_function = funct;
+			try{
+			function = link.getClass().getMethod(funct);
+			}catch(Exception e) {
+				Logger.instance.SEVERE("Error Wrapping DecryptTextUI");
+				e.printStackTrace();
+				function = null;
+			}
+		}
+		
+		@Override
+		public void stateChanged(ChangeEvent event) {
+			if(function != null) {
+				try{
+				function.invoke(link);
+				}catch(Exception e) {
+					Logger.instance.SEVERE("Error instigating Function");
+					e.printStackTrace();
+				}
+				
+			}
+		}
+		
+	}
 	
 }

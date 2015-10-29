@@ -158,17 +158,24 @@ public class FrequencyAnalyser {
 		return dataset;
 	}
 	
-	public Map<Character,String> getReasonableGuesses() {
-		//TODO
-		
-		return null;
+	public Map<Character,String> getReasonableGuesses(float leyway) {
+		Map<Character,Float> information = frequencies();
+		Map<Character,String> data = new HashMap<Character,String>();
+		for(char c : information.keySet()) {
+			data.put(c, smartGuess(information,c,leyway));
+		}
+		return data;
 	}
 	
-	private String smartGuess(Map<Character,Float> m,float f) {
-		
-		
-			
-		return "";
+	private String smartGuess(Map<Character,Float> link,char chr,float leyway) {
+		String results = "";
+		for(int i = 0; i < standard.size(); i++) {
+			float q = standard.get(chr) - link.get(chr);
+			if(q < leyway || q > (0-leyway)) {
+				results = results + chr;
+			}
+		}
+		return results;
 	}
 	
 	private char getHighest(Map<Character,Float> m) {
