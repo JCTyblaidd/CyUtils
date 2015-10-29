@@ -258,7 +258,42 @@ public class DecryptTextUI {
 	}
 	
 	public void refresh_results_page() {
+		try{
+			//DEBUG
+			System.out.println(possibilities_freq);
+			//END OF DEBUG
+			int index = (int)results_num.getValue();
+			int option = (int)results_num.getValue();
+			boolean isFiltered = results_use_filtered.isSelected();
+			if(option == 0){//"Frequency Analysis") {
+				if(isFiltered) {
+					index %= lexical_accepted_freq.size();
+					results_data.setText(lexical_accepted_freq.get(index));
+				}else {
+					index %= possibilities_freq.size();
+					results_data.setText(possibilities_freq.get(index));
+				}
+			}else if(option == 1){//"Transposition") {
+				if(isFiltered) {
+					index %= lexical_accepted_trans.size();
+					results_data.setText(lexical_accepted_trans.get(index));
+				}else{
+					index %= possibilities_trans.size();
+					results_data.setText(possibilities_trans.get(index));
+				}
+			}else if(option == 2){//"Polyaphabetic") {
+				if(isFiltered) {
+					index %= lexical_accepted_poly.size();
+					results_data.setText(lexical_accepted_poly.get(index));
+				}else {
+					index %= possibilities_poly.size();
+					results_data.setText(possibilities_poly.get(index));
+				}
+			}
 		
+		}catch(Exception e){
+			results_data.setText(" ===== ERROR ===== \n\n"+e.getMessage());
+		}
 	}
 	
 	public void export_unfiltered() {

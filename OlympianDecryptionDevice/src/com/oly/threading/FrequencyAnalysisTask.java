@@ -28,8 +28,10 @@ public class FrequencyAnalysisTask implements Runnable{
 	@Override
 	public void run() {
 		freq.Analyse();
-		Map<Character,String> guesses = freq.getReasonableGuesses(3.0f);
+		Map<Character,String> guesses = freq.getReasonableGuesses(1.5f);
+		Logger.instance.INFO("Freq Analysis Guesses = " + guesses);
 		List<String> results = KeyDecrypter.getDecryptions(guesses, text);
+		Logger.instance.INFO("Frequency Analysis Task found [" + results.size() + "] options");
 		linked.possibilities_freq.addAll(results);
 		linked.poss_dirty_freq = true;
 		Logger.instance.INFO("Frequency Analysis Task finished");
