@@ -40,10 +40,11 @@ public class KeyDecrypter {
 	
 	private static Map<Character,Character> getNthMap(Map<Character,String> map, int num) {
 		Map<Character,Character> result = new HashMap<Character,Character>();
+		System.out.println(map);
 		int temp = 1;//WHAT IS USED FOR THE MODULUS
 		for(char c : map.keySet()) {
 			temp *= map.get(c).length();
-			result.put(c, map.get(c).charAt(num   %  temp));
+			result.put(c, map.get(c).charAt((Math.floorDiv(num, temp)) % (map.get(c).length())));
 		}
 		return result;
 	}

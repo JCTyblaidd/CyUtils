@@ -16,10 +16,12 @@ public class FrequencyAnalysisTask implements Runnable{
 	
 	public DecryptTextUI linked;
 	public FrequencyAnalyser freq;
+	public String text;
 	
 	public FrequencyAnalysisTask(DecryptTextUI link) {
 		this.linked = link;
-		freq = new FrequencyAnalyser(linked.cypher);
+		text = link.cypher.substring(0);
+		freq = new FrequencyAnalyser(text);
 	}
 
 
@@ -27,7 +29,7 @@ public class FrequencyAnalysisTask implements Runnable{
 	public void run() {
 		freq.Analyse();
 		Map<Character,String> guesses = freq.getReasonableGuesses(3.0f);
-		List<String> results = KeyDecrypter.getDecryptions(guesses, linked.cypher);
+		List<String> results = KeyDecrypter.getDecryptions(guesses, text);
 		linked.possibilities_freq.addAll(results);
 		linked.poss_dirty_freq = true;
 		Logger.instance.INFO("Frequency Analysis Task finished");

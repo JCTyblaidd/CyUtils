@@ -13,7 +13,7 @@ public class RailDecrypter {
 	public static List<String> bruteForceTransposition(String cypher) {
 		int limit = (int) Math.floor(Math.sqrt(cypher.length()));
 		List<String> results = new ArrayList<String>();
-		for(int i = 0; i < limit; i++) {
+		for(int i = 1; i < limit; i++) {
 			//SPLIT
 			String[] data = new String[i];
 			int s_lim = (int)Math.ceil(cypher.length() / i);

@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -43,16 +44,16 @@ public class DecryptTextUI {
 	
 	public final String cypher;
 	
-	public volatile List<String> possibilities_freq;
-	public volatile List<String> lexical_accepted_freq;
+	public volatile List<String> possibilities_freq = new ArrayList<String>();
+	public volatile List<String> lexical_accepted_freq = new ArrayList<String>();
 	public volatile boolean poss_dirty_freq = true;
 	///
-	public volatile List<String> possibilities_trans;
-	public volatile List<String> lexical_accepted_trans;
+	public volatile List<String> possibilities_trans = new ArrayList<String>();
+	public volatile List<String> lexical_accepted_trans = new ArrayList<String>();
 	public volatile boolean poss_dirty_trans;
 	///
-	public volatile List<String> possibilities_poly;
-	public volatile List<String> lexical_accepted_poly;
+	public volatile List<String> possibilities_poly = new ArrayList<String>();
+	public volatile List<String> lexical_accepted_poly = new ArrayList<String>();
 	public volatile boolean poss_dirty_poly;
 	
 	//UI elements
@@ -214,7 +215,7 @@ public class DecryptTextUI {
 		results_use_filtered = new JCheckBox();
 		results_tab.setBounds(10, 10, 150, 20);
 		results_num.setBounds(10, 35, 150, 20);
-		results_use_filtered.setBounds(10,50,150,20);
+		results_use_filtered.setBounds(10,60,150,20);
 		results_use_filtered.setText("Use filtered? ");
 		results_tab.addChangeListener(new ReflectionChangeHandler(this, "refresh_results_page"));
 		results_num.addChangeListener(new ReflectionChangeHandler(this, "refresh_results_page"));

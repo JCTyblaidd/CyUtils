@@ -169,10 +169,16 @@ public class FrequencyAnalyser {
 	
 	private String smartGuess(Map<Character,Float> link,char chr,float leyway) {
 		String results = "";
-		for(int i = 0; i < standard.size(); i++) {
-			float q = standard.get(chr) - link.get(chr);
-			if(q < leyway || q > (0-leyway)) {
-				results = results + chr;
+		//for(int i = 0; i < standard.size(); i++) {
+		//	float q = standard. - link.get(chr);
+		//	if(q < leyway || q > (0-leyway)) {
+		//		results = results + chr;
+		//	}
+		//}
+		for(char c : standard.keySet()) {
+			float q = standard.get(c) - link.get(c);
+			if(Math.abs(q) < leyway) {
+				results = results + c;
 			}
 		}
 		return results;
