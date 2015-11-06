@@ -1,6 +1,7 @@
 package com.oly.main;
 
 import com.oly.decryption.analysis.FrequencyAnalyser;
+import com.oly.lexical.analysis.LexicalAnalyser;
 import com.oly.ui.FrequencyAnalysisUI;
 import com.oly.ui.TranslationUI;
 import com.oly.util.Logger;
@@ -13,6 +14,7 @@ public class Main implements Runnable{
 	private boolean isStopped = false;
 	
 	public static void main(String[] args) { //QUICK SPIN OFF FUNCTION
+		LexicalAnalyser.INIT();
 		MASTER = new Main(args);
 		Logger.instance.init_logger();
 		

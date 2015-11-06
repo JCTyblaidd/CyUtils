@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class KeyDecryptionInformation {
 	
-	public static final String  ALPHABET = "abcdefghijklmnopqrstuvwxyz";
+	public static final String  ALPHABET = "abcdefghijklmnopqrstuvwxyz".toUpperCase();
 	
 	
 	public HashMap<Character,Character> encrypt = new HashMap<Character,Character>();

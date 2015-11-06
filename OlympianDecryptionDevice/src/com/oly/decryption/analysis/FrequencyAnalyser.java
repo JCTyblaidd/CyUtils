@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.oly.util.Logger;
+
 public class FrequencyAnalyser {
 
 	public HashMap<Character, Float> standard = new HashMap<Character, Float>();
@@ -160,9 +162,19 @@ public class FrequencyAnalyser {
 	
 	public Map<Character,String> getReasonableGuesses(float leyway) {
 		Map<Character,Float> information = frequencies();
+		Logger.instance.INFO("debug-freq-analy = " + information);
 		Map<Character,String> data = new HashMap<Character,String>();
 		for(char c : information.keySet()) {
 			data.put(c, smartGuess(information,c,leyway));
+		}
+		//ENSURES IT CONTAINS THE ALTERATE OPTIONALITY AS WELL
+		Map<Character,Character> backup = getGuess_HIGH();
+		for(char c : data.keySet()) {
+			if(!(data.get(c).contains(new String(new char[]{backup.get(c)})))) {
+				String temp = data.get(c);
+				temp = temp + backup.get(c);
+				data.put(c, temp);
+			}
 		}
 		return data;
 	}
@@ -176,7 +188,7 @@ public class FrequencyAnalyser {
 		//	}
 		//}
 		for(char c : standard.keySet()) {
-			float q = standard.get(c) - link.get(c);
+			float q = standard.get(c) - link.get(chr);
 			if(Math.abs(q) < leyway) {
 				results = results + c;
 			}

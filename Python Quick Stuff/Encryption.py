@@ -128,6 +128,14 @@ def getShiftDictionary(shift):
     return out
 
 
+def getAffine(shift1,shift2):
+    global Alphabet
+    out = dict()
+    for x in range(len(Alphabet)):
+        out[Alphabet[(x + 1) % len(Alphabet)].lower()] = Alphabet[((((x + 1) * shift1) + shift2) % len(Alphabet)) % len(Alphabet)].lower()
+    #print("DEBUG BIG = " + str(out))
+    print("DEBUG = " + str(len(out)))
+    return out
 
 def getKeywordDictionary(key):
     global Alphabet
@@ -277,12 +285,33 @@ def MainLoop():
             key = int(input("Enter (int) shift"))
             ConversionDict = getShiftDictionary(key)
             print("loaded")
+            ###############################################HOOKS FOR QUICK CYPHER CHALLENGE#################
         elif i == "shiftall":
             to = input("decrypt: ")
             for v in range(26):
                 print("KEY = " + str(v))
                 print(Decrypt(to,getShiftDictionary(v)))
             print(" ==END OF CRACK== ")
+        elif i == "affineall":
+            to = input("decrypt: ")
+            for v1 in range(26):
+                for v2 in range(26):
+                    print("KEY = " + str(v1) + "x + " + str(v2))
+                    print(Decrypt(to,getAffine(v1,v2)))
+        elif i == "affineallnospace":
+            to = input("decrypt: ")
+            for v1 in range(26):
+                for v2 in range(26):
+                    print("KEY = " + str(v1) + "x + " + str(v2))
+                    temp = Decrypt(to,getAffine(v1,v2))
+                    print(temp.replace(" ",""))
+                    
+            #########################################################END OF HOOKS############################
+        elif i == "deaffine":
+            to = input("decrypt: ")
+            a = int(input("ax"))
+            b = int(input(" + b"))
+            print(Decrypt(to,getAffine(a,b)))
         elif i == "encrypt":
             to = input("Enter message: ")
             print(Encrypt(to,ConversionDict))

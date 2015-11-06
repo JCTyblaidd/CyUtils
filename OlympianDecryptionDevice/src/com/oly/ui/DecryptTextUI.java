@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -28,7 +29,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.ColorUIResource;
 
+import com.oly.decryption.analysis.FrequencyAnalyser;
 import com.oly.threading.FrequencyAnalysisTask;
+import com.oly.threading.LexicalAnalysisTask;
 import com.oly.threading.SmartThread;
 import com.oly.threading.TranspositionBruteTask;
 import com.oly.util.Logger;
@@ -43,6 +46,7 @@ import com.oly.util.Logger;
 public class DecryptTextUI {
 	
 	public final String cypher;
+	private static final float leyway_lex = 0.15f;
 	
 	public volatile List<String> possibilities_freq = new ArrayList<String>();
 	public volatile List<String> lexical_accepted_freq = new ArrayList<String>();
@@ -87,6 +91,7 @@ public class DecryptTextUI {
 	public JPanel options_section;
 	public JCheckBox isDisguised;//WORD STRUCTRE
 	public JTextArea text_isDisguised;
+	public JButton Lexical_Analyse;
 	
 	//TAB6 Results
 	public JPanel tab6;
@@ -204,7 +209,10 @@ public class DecryptTextUI {
 		options_section.setBounds(0,0,150,250);
 		options_section.setLocation(0, 0);
 		tab5.add(options_section);
-		
+		Lexical_Analyse = new JButton("Lexically Analyse");
+		Lexical_Analyse.setBounds(300,300,175,30);
+		Lexical_Analyse.addActionListener(new ReflectionActionHandler(this, "init_lexical_analysis"));
+		tab5.add(Lexical_Analyse);
 		//TAB6
 		tab6 = new JPanel();
 		tab6.setBounds(0,0,840,510);
@@ -225,8 +233,13 @@ public class DecryptTextUI {
 		tab6.add(results_use_filtered,BorderLayout.WEST);
 		results_data = new JTextArea();
 		results_data.setBounds(170, 3, 657, 480);
+		results_data.setLineWrap(true);
+		results_data.setWrapStyleWord(true);
 		results_data.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED, Color.BLACK,Color.GRAY));
 		tab6.add(results_data);
+		
+		//
+		populate_table();
 	}
 	
 	
@@ -235,6 +248,43 @@ public class DecryptTextUI {
 		c.setMaximumSize(new Dimension(width,height));
 		c.setPreferredSize(new Dimension(width,height));
 		c.setMinimumSize(new Dimension(width,height));
+	}
+	
+	private void populate_table() {
+		FrequencyAnalyser analyse = new FrequencyAnalyser(cypher);
+		analyse.Analyse();
+		Map<Character,String> data = analyse.getReasonableGuesses(leyway_lex);
+		Map<Character,Float> freqs = analyse.frequencies();
+		Map<Character,Float> normal = analyse.standard;
+		String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		Logger.instance.INFO("DEBUG: freqdata = " + data);
+		//REMOVAL OF *certainty*
+		String certs = "";
+		for(char c : data.keySet()) {
+			if(data.get(c).length() == 1) {
+				certs = certs + data.get(c).charAt(0);
+			}
+		}
+		for(char c : data.keySet()) {
+			String info = data.get(c);
+			for(char q : certs.toCharArray()) {
+				info.replace(new String(new char[] {q}),"");
+			}
+			if(info.length() > 0) {
+				data.put(c, info);
+			}
+		}
+		Logger.instance.INFO("DEBUG: freqdata goes to => " + data);
+		Logger.instance.INFO("DEBUG: " + data.get(alphabet.charAt(1)));
+		//PUSH TO TABLE
+		for(int i = 0; i < alphabet.length(); i++) {
+			freq_analysis.setValueAt(alphabet.charAt(i),i, 0);
+			freq_analysis.setValueAt(data.get(alphabet.charAt(i)), i, 1);
+			freq_analysis.setValueAt(freqs.get(alphabet.charAt(i)),i, 2);
+			/////////////////////////////////////////////////////////////
+			freq_analysis.setValueAt(alphabet.charAt(i),i, 4);
+			freq_analysis.setValueAt(normal.get(alphabet.charAt(i)),i, 5);
+		}
 	}
 	
 	/////////////////////////////////UPDATE FUNCTIONALITY//////////////////////////////
@@ -254,13 +304,13 @@ public class DecryptTextUI {
 	}
 	
 	public void init_lexical_analysis() {
-		
+		SmartThread.runRunnable(new LexicalAnalysisTask(this));
 	}
 	
 	public void refresh_results_page() {
 		try{
 			//DEBUG
-			System.out.println(possibilities_freq);
+			//System.out.println(possibilities_freq);
 			//END OF DEBUG
 			int index = (int)results_num.getValue();
 			int option = (int)results_num.getValue();
