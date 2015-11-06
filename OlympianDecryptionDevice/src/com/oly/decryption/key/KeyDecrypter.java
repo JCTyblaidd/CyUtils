@@ -175,21 +175,26 @@ public class KeyDecrypter {
 				splits[i] = getSubShiftString(input, i, best_shift);
 			}
 			//TODO have e = top 3 instead
+			boolean has_worked = false;
 			for(int i = 0; i < best_shift; i++) {
-				shifts[i] = -1;
+				shifts[i] = 1;//NO CRASHY ON ERROR
 				for(int j = 0; j < 26; j++) {
-					if(isEMax(shiftAffine(input, 0, j))) {
+					if(isEMax(shift(splits[i], j))) {
 						shifts[i] = j;
+						has_worked = true;
 						break;
 					}
 				}
 			}
+			if(!has_worked) {
+				System.out.println("Failed to get Poly KEY!");
+			}
 			/////////////////////////DECRYPT BEST GUESS//////////////////////
 			String key = "";
-			Logger.instance.LOG("Smart key=" + key);
 			for(int i = 0; i < best_shift; i++) {
-				key = key + Alphabet.charAt(shifts[i]);
+				key = key + Alphabet.charAt(shifts[i % 26]);
 			}
+			Logger.instance.LOG("Smart key=" + key);
 			results.add(decrypt_poly(input, key));
 		}
 		
@@ -216,14 +221,18 @@ public class KeyDecrypter {
 			counts[i] = 0;
 		}
 		for(char c : text.toCharArray()) {
+			try{
 			counts[Alphabet.indexOf(Character.toUpperCase(c))] ++;
-		}
+			}catch(Exception e) {/**NO OP**/} //HANDLE SYMBOLS
+ 		}
 		int max = -100;
 		for(int i : counts) {
 			if(i > max) {
 				max = i;
 			}
 		}
+		System.out.println("EMAX-DEBUG: text10= " + text.substring(0, 10));
+		System.out.println("EMAX-DEBUG: " + max + " .. " + counts[Alphabet.indexOf('E')]);
 		if(max == counts[Alphabet.indexOf('E')]) {
 			return true;
 		}
@@ -233,7 +242,7 @@ public class KeyDecrypter {
 	public static String shift(String text,int shifts) {
 		String temp  = text;
 		for(int i = 0; i < shifts; i++) {
-			temp = temp.charAt(temp.length()-1) + temp.substring(1);
+			temp = temp.charAt(temp.length()-1) + temp.substring(0,temp.length()-1);
 		}
 		return temp;
 	}
