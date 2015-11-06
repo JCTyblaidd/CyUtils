@@ -177,7 +177,7 @@ public class KeyDecrypter {
 			//TODO have e = top 3 instead
 			boolean has_worked = false;
 			for(int i = 0; i < best_shift; i++) {
-				shifts[i] = 1;//NO CRASHY ON ERROR
+				shifts[i] = 0;//NO CRASHY ON ERROR //ALTHOUGH LEEDS TO HUGE AMOUTS OF a's
 				for(int j = 0; j < 26; j++) {
 					if(isEMax(shift(splits[i], j))) {
 						shifts[i] = j;
