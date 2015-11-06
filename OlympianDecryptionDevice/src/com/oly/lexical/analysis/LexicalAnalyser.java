@@ -1,7 +1,6 @@
 package com.oly.lexical.analysis;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class LexicalAnalyser {
 	
@@ -69,7 +68,6 @@ public class LexicalAnalyser {
 	
 	///////////////////////////////////USELESSNESS////////////////////////////////////
 	
-	@SuppressWarnings("unused")
 	private static enum Language {
 		
 		

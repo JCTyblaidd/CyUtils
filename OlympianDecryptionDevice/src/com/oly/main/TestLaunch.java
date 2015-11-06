@@ -1,8 +1,5 @@
 package com.oly.main;
 
-import java.awt.Color;
-import java.util.List;
-
 import com.oly.decryption.key.KeyDecrypter;
 import com.oly.lexical.analysis.LexicalAnalyser;
 import com.oly.ui.DecryptTextUI;

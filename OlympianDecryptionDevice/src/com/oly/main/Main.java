@@ -1,9 +1,7 @@
 package com.oly.main;
 
-import com.oly.decryption.analysis.FrequencyAnalyser;
 import com.oly.lexical.analysis.LexicalAnalyser;
-import com.oly.ui.FrequencyAnalysisUI;
-import com.oly.ui.TranslationUI;
+import com.oly.ui.DecryptTextUI;
 import com.oly.util.Logger;
 import com.oly.web.WebScraper;
 
@@ -31,15 +29,19 @@ public class Main implements Runnable{
 		}
 		Logger.instance.LOG("CURRENT CHALLENGE = " + curr_chall);
 		
-		//LAUNCH CHALLENGES
-		FrequencyAnalyser analyserA = new FrequencyAnalyser(WebScraper.getChallenge(curr_chall, 'A'));
-		FrequencyAnalyser analyserB = new FrequencyAnalyser(WebScraper.getChallenge(curr_chall, 'B'));
+		new DecryptTextUI("Challenge " + curr_chall +"A",WebScraper.getChallenge(curr_chall, 'A'));
+		new DecryptTextUI("Challenge " + curr_chall +"B",WebScraper.getChallenge(curr_chall, 'B'));
 		
-		new FrequencyAnalysisUI("Current Challenge A",analyserA);
-		new FrequencyAnalysisUI("Current Challenge B",analyserB);
+		
+		//LAUNCH CHALLENGES
+		//FrequencyAnalyser analyserA = new FrequencyAnalyser(WebScraper.getChallenge(curr_chall, 'A'));
+		//FrequencyAnalyser analyserB = new FrequencyAnalyser(WebScraper.getChallenge(curr_chall, 'B'));
+		
+		//new FrequencyAnalysisUI("Current Challenge A",analyserA);
+		//new FrequencyAnalysisUI("Current Challenge B",analyserB);
 		//OPEN PLAIN TEXT WINDOWS
-		new TranslationUI(" === CURRENT CHALLENGE A TEXT === \n\n"+WebScraper.getChallenge(curr_chall, 'A'));
-		new TranslationUI(" === CURRENT CHALLENGE B TEXT === \n\n"+WebScraper.getChallenge(curr_chall, 'B'));
+		//new TranslationUI(" === CURRENT CHALLENGE A TEXT === \n\n"+WebScraper.getChallenge(curr_chall, 'A'));
+		//new TranslationUI(" === CURRENT CHALLENGE B TEXT === \n\n"+WebScraper.getChallenge(curr_chall, 'B'));
 		
 		
 		//KILL _IGNORE
