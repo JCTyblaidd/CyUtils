@@ -16,6 +16,12 @@ public class SmartThread implements Runnable{
 	public static List<SmartThread> threads = new ArrayList<SmartThread>();
 	///
 	
+	public static void runRunnable(Runnable runnable) {
+		Thread thread = new Thread(runnable);
+		thread.start();
+	}
+	
+	
 	public static void TerminateThreads() {
 		for(SmartThread t : threads) {
 			t.Stop();

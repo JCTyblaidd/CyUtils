@@ -38,6 +38,8 @@ public class TextWindowCommandManager{
 					try {
 					command.run(str.substring(str.indexOf(" "),str.length()-1).split(" "), linked);
 					}catch(Exception e) {
+						Logger.instance.SEVERE("COMMAND ERROR :> " + e.getClass().getName());
+						e.printStackTrace();
 						command.run(new String[]{""}, linked);
 					}
 				}

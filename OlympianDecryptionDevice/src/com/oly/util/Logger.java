@@ -4,6 +4,8 @@ import java.awt.Color;
 
 import com.oly.ui.CommandedWrappedTextWindow;
 import com.oly.ui.TextWindow;
+import com.oly.util.command.DecryptAffineCommand;
+import com.oly.util.command.DecryptCeasarCommand;
 import com.oly.util.command.StopProgramCommand;
 
 public class Logger {
@@ -26,7 +28,8 @@ public class Logger {
 		
 		//Register All Commands Here
 		registerLogger(new StopProgramCommand());
-		
+		registerLogger(new DecryptCeasarCommand());
+		registerLogger(new DecryptAffineCommand());
 	}
 	
 	public void registerLogger(ITextWindowCommand command) {
