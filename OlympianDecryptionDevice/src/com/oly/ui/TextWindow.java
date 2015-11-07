@@ -136,7 +136,7 @@ public class TextWindow implements ITextUI{
 				link_window.out_temp = temp;
 			}
 			//link_window.writeLine("         " + temp);
-			writeWithColor(input_formatting+temp+"\n",Color.RED);
+			writeLine_col(input_formatting+temp+"\n",Color.RED);
 		}
 		
 	}

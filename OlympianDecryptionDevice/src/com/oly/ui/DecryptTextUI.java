@@ -318,43 +318,84 @@ public class DecryptTextUI {
 		SmartThread.runRunnable(new LexicalAnalysisTask(this));
 	}
 	
+	//ANTI CRASH
+	boolean refreshing_data = false;
+	
 	public void refresh_results_page() {
+		if(refreshing_data) {
+			//Logger.instance.LOG("DEBUG: REFRESH SKIP");
+			return;
+		}
+		refreshing_data = true;
 		try{
-			//DEBUG
-			//System.out.println(possibilities_freq);
-			//END OF DEBUG
 			int index = (int)results_num.getValue();
-			int option = (int)results_num.getValue();
+			String option = (String)results_tab.getValue();
 			boolean isFiltered = results_use_filtered.isSelected();
-			if(option == 0){//"Frequency Analysis") {
+			
+			//MIN CLAMPING
+			if(index < 0) {
+				index = 0;
+				results_num.setValue(0);
+			}
+			//END MIN CLAMPING
+			
+			//System.out.println("DEGBUG :: " + possibilities_freq.size());
+			
+			if(option == "Frequency Analysis") {
 				if(isFiltered) {
-					index %= lexical_accepted_freq.size();
+					if(index > lexical_accepted_freq.size()-1) {
+						index = lexical_accepted_freq.size()-1;
+						results_num.setValue(index);
+					}
 					results_data.setText(lexical_accepted_freq.get(index));
 				}else {
-					index %= possibilities_freq.size();
+					if(index > possibilities_freq.size()-1) {
+						index = possibilities_freq.size()-1;
+						results_num.setValue(index);
+					}
 					results_data.setText(possibilities_freq.get(index));
 				}
-			}else if(option == 1){//"Transposition") {
+			}else if(option == "Transposition") {
 				if(isFiltered) {
-					index %= lexical_accepted_trans.size();
+					if(index > lexical_accepted_trans.size()-1) {
+						index = lexical_accepted_trans.size()-1;
+						results_num.setValue(index);
+					}
 					results_data.setText(lexical_accepted_trans.get(index));
 				}else{
-					index %= possibilities_trans.size();
+					if(index > possibilities_trans.size()-1) {
+						index = possibilities_trans.size()-1;
+						results_num.setValue(index);
+					}
 					results_data.setText(possibilities_trans.get(index));
 				}
-			}else if(option == 2){//"Polyaphabetic") {
+			}else if(option == "Polyaphabetic") {
 				if(isFiltered) {
-					index %= lexical_accepted_poly.size();
+					if(index > lexical_accepted_poly.size()-1) {
+						index = lexical_accepted_poly.size()-1;
+						results_num.setValue(index);
+					}
 					results_data.setText(lexical_accepted_poly.get(index));
 				}else {
+					if(index > possibilities_poly.size()-1) {
+						index = possibilities_poly.size()-1;
+						results_num.setValue(index);
+					}
 					index %= possibilities_poly.size();
 					results_data.setText(possibilities_poly.get(index));
 				}
 			}
-		
+			refreshing_data = false;
 		}catch(Exception e){
-			results_data.setText(" ===== ERROR ===== \n\n"+e.getMessage());
+			if(e instanceof ArrayIndexOutOfBoundsException) {
+				results_data.setText(" =>> NO DATA HERE <<=");
+				results_num.setValue(0);//FIX
+			}else{
+				results_data.setText(" ===== ERROR ===== \n\n"+e.getMessage());
+				e.printStackTrace();
+			}
 		}
+		refreshing_data = false;
 	}
 	
 	public void export_unfiltered() {

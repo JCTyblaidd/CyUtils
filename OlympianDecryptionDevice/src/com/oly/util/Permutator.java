@@ -20,11 +20,12 @@ public class Permutator<OBJ> implements Iterator<OBJ[]>{
 		iteration = 0;
 		calculated = new ArrayList<OBJ[]>();
 		gen_permutate(Arrays.copyOf(data,data.length),0);
+		Logger.instance.LOG("Permutator Created {" + calculated.size() + " / " + getArrangementCount());
 	}
 	
 	private void gen_permutate(OBJ[] arr,int k) {
 		//k detemines the location swapping happens to
-		for(int i = k; i < (data.length - 1); i++) {
+		for(int i = k; i < (data.length - 1); i++) { //NB WAS 1
 			//Apply permutations
 			
 			//If k = data.length
@@ -41,8 +42,10 @@ public class Permutator<OBJ> implements Iterator<OBJ[]>{
 			}
 			
 		}
-		
-		
+		//BECAUSE I AM A MORON
+		//if(k == data.length) {
+		//	calculated.add(Arrays.copyOf(arr, arr.length));
+		//}
 	}
 	
 	

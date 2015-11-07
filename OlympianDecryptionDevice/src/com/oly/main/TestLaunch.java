@@ -15,6 +15,9 @@ public class TestLaunch {
 		Logger.instance.init_logger();
 		Logger.instance.LOG(" === INITING ===");
 		
+		//Logger.instance.LOG("Text STUFF IGNORE + REMOVE");
+		//new DecryptTextUI("Test",WebScraper.getChallenge(1,'A'));
+		
 		//Logger.instance.init_logger();
 		//Logger.instance.LOG(WebScraper.getChallenge(3, 'A'));
 		//Logger.instance.LOG(WebScraper.getChallenge(2, 'A'));
