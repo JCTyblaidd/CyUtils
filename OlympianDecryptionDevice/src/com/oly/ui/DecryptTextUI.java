@@ -31,6 +31,7 @@ import javax.swing.plaf.ColorUIResource;
 
 import com.oly.decryption.analysis.FrequencyAnalyser;
 import com.oly.threading.FrequencyAnalysisTask;
+import com.oly.threading.LaunchAnalysisAutoTask;
 import com.oly.threading.LexicalAnalysisTask;
 import com.oly.threading.SmartThread;
 import com.oly.threading.TranspositionBruteTask;
@@ -240,6 +241,10 @@ public class DecryptTextUI {
 		
 		//
 		populate_table();
+		
+		//////AUTOMATICALLY DO SOME ANALYSIS////
+		
+		init_all_tasks();
 	}
 	
 	
@@ -293,6 +298,12 @@ public class DecryptTextUI {
 	
 	
 	///////////////////////////////SPIN OFF FUNCTIONALITY////////////////////////////
+	
+	//Called on creation
+	public void init_all_tasks() {
+		SmartThread.runRunnable(new LaunchAnalysisAutoTask(this));
+	}
+	
 	
 	public void init_freq_analysis() {
 		SmartThread.runRunnable(new FrequencyAnalysisTask(this));

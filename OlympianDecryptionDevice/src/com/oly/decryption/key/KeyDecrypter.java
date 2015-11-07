@@ -231,8 +231,8 @@ public class KeyDecrypter {
 				max = i;
 			}
 		}
-		System.out.println("EMAX-DEBUG: text10= " + text.substring(0, 10));
-		System.out.println("EMAX-DEBUG: " + max + " .. " + counts[Alphabet.indexOf('E')]);
+		//System.out.println("EMAX-DEBUG: text10= " + text.substring(0, 10));
+		//System.out.println("EMAX-DEBUG: " + max + " .. " + counts[Alphabet.indexOf('E')]);
 		if(max == counts[Alphabet.indexOf('E')]) {
 			return true;
 		}
