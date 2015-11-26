@@ -1,5 +1,6 @@
 package com.oly.main;
 
+import com.oly.decryption.key.KeyDecrypter;
 import com.oly.lexical.analysis.LexicalAnalyser;
 import com.oly.ui.DecryptTextUI;
 import com.oly.util.Logger;
@@ -43,6 +44,9 @@ public class Main implements Runnable{
 		//new TranslationUI(" === CURRENT CHALLENGE A TEXT === \n\n"+WebScraper.getChallenge(curr_chall, 'A'));
 		//new TranslationUI(" === CURRENT CHALLENGE B TEXT === \n\n"+WebScraper.getChallenge(curr_chall, 'B'));
 		
+		String challB = WebScraper.getChallenge(6,'B');
+		String test = KeyDecrypter.decrypt_poly(challB, "kremlin");
+		System.out.println(test);
 		
 		//KILL _IGNORE
 		MASTER.run();

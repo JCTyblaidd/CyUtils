@@ -176,6 +176,15 @@ public class FrequencyAnalyser {
 				data.put(c, temp);
 			}
 		}
+		//OPTIMISE THE **** out of it
+		for(char c : information.keySet()) {
+			if(information.get(c) < 0.05) {//USELESS
+				data.put(c, "*");
+			}
+		}
+		
+		
+		
 		return data;
 	}
 	
@@ -189,8 +198,12 @@ public class FrequencyAnalyser {
 		//}
 		for(char c : standard.keySet()) {
 			float q = standard.get(c) - link.get(chr);
-			if(Math.abs(q) < leyway) {
-				results = results + c;
+			if(Math.abs(q) > 5.5f) {
+				if(Math.abs(q) < (leyway * 5)); //MORE ALLOWANCE
+			}else {
+				if(Math.abs(q) < (leyway * 0.5)) {
+					results = results + c;
+				}
 			}
 		}
 		return results;

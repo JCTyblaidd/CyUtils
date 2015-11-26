@@ -68,7 +68,7 @@ public class WebScraper {
 	}
 	
 	public static String kill_html_tags(String string) {
-		string = string.replace("’","");
+		string = string.replace("â€™","");
 		/////STYLE REMOVAL
 		int style1 = string.indexOf("<style type=\"text/css\">");
 		int style2 = string.indexOf("</style>");
@@ -100,6 +100,11 @@ public class WebScraper {
 			//Logger.instance.LOG("REMOVED:" + temp);
 			output = output.replace(temp, "");
 		}
+		
+		//FIXES HTML SCRAPING FORMAT BUGS
+		output = output.replace("â€œ","\"");
+		output = output.replace("â€�","\"");
+		
 		return output.trim();
 	}
 	
@@ -120,7 +125,7 @@ public class WebScraper {
 		String searchable = data.substring(init, end);
 		//TRIM USELESSNESS
 		searchable = searchable.replace("<br/>","");
-		searchable = searchable.replace("’","");
+		searchable = searchable.replace("â€™","");
 		//TRIM USELESSNESS
 		for(int v = 0; v < 100; v++) { //REMOVE EXCESSIVE SPACING
 			searchable = searchable.replace("  "," ");
@@ -136,8 +141,8 @@ public class WebScraper {
 		//
 		poss = strs_replace(poss,"/div","");
 		poss = strs_replace(poss,"/br","");
-		poss = strs_replace(poss,"…br","");
-		poss = strs_replace(poss,"…","");
+		poss = strs_replace(poss,"â€¦br","");
+		poss = strs_replace(poss,"â€¦","");
 		poss = strs_replace(poss,"c_","");
 		poss = strs_replace(poss,"/","");
 		poss = strs_replace(poss,"Challenge 1 B","");

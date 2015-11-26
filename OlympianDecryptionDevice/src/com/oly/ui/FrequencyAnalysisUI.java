@@ -116,7 +116,7 @@ public class FrequencyAnalysisUI implements IUI {
 				Object obj2 = link.table.getValueAt(v,1);
 				char c1 = getChar(obj1);
 				char c2 = getChar(obj2);
-				info.put(c1, c2);
+				info.put(c2, c1);
 			}
 			String output = KeyDecrypter.decrypt(link.analyser.data, info);
 			

@@ -47,7 +47,7 @@ import com.oly.util.Logger;
 public class DecryptTextUI {
 	
 	public final String cypher;
-	private static final float leyway_lex = 0.15f;
+	private static final float leyway_lex = 0.55f;
 	
 	public volatile List<String> possibilities_freq = new ArrayList<String>();
 	public volatile List<String> lexical_accepted_freq = new ArrayList<String>();

@@ -56,10 +56,15 @@ public class FrequencyAnalysisTask implements Runnable{
 		//NOPE
 		//List<String> results = KeyDecrypter.getAllowedDecryptions(guesses, text, 0.19f);
 		List<String> results = KeyDecrypter.bruteAffine(text);
+		//#List<String> screwu = KeyDecrypter.getAllowedDecryptions(guesses, text,0.1f);
+		//System.out.println("SCREWU: " + screwu.size());
 		linked.possibilities_freq.addAll(results);
+		//linked.possibilities_freq.addAll(screwu);
 		linked.poss_dirty_freq = true;
 		List<String> results2 = KeyDecrypter.smart_brute_polyalphabet(text);
+		List<String> temp = KeyDecrypter.brutePolyOfSizeX(text, 2);
 		linked.possibilities_poly.addAll(results2);
+		linked.possibilities_poly.addAll(temp);
 		linked.poss_dirty_poly = true;
 	}
 	

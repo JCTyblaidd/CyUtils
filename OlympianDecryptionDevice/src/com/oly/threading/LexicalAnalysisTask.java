@@ -1,5 +1,6 @@
 package com.oly.threading;
 
+import com.oly.decryption.key.KeyDecrypter;
 import com.oly.lexical.analysis.LexicalAnalyser;
 import com.oly.ui.DecryptTextUI;
 import com.oly.util.Logger;
@@ -27,7 +28,7 @@ public class LexicalAnalysisTask implements Runnable{
 		if(linked.poss_dirty_poly) {
 			Logger.instance.LOG("== INIT POLY LEXICAL ANALYSIS ==");
 			for(String option : linked.possibilities_poly) {
-				if(LexicalAnalyser.rate(option, null) > 0.75) {
+				if(LexicalAnalyser.rate(option, null) > 0.75) {		//TODO unchange
 					linked.lexical_accepted_poly.add(option);
 				}
 			}

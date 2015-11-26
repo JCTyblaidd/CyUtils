@@ -11,6 +11,8 @@ Alphabet = "abcdefghijklmnopqrstuvwxyz"
 ConversionDict = dict()
 useless = None
 
+stringtemp = ""
+
 #Silly Functions
 #Slow printing
 #def print(*args, **kwargs):
@@ -305,7 +307,56 @@ def MainLoop():
                     print("KEY = " + str(v1) + "x + " + str(v2))
                     temp = Decrypt(to,getAffine(v1,v2))
                     print(temp.replace(" ",""))
-                    
+        #Custom Dictionary Shizzle
+        elif i == "clearDict":
+            ConversionDict = dict()
+        elif i == "setDict":
+            Cfrom = input("Char From: ")
+            Cto = input("Char TO: ")
+            ConversionDict[Cto] = Cfrom
+        elif i == "letterscan":
+            text = input("Text: ").replace(" ","")
+            toscan = input("Scan :")
+            #SCAN
+            indexes = list()
+            for i in range(len(text)):
+                yes = True
+                for j in range(len(toscan)):
+                    if text[i + j] == toscan[j]:
+                        a = ""
+                    else:
+                        yes = False
+                    if yes:
+                        indexes.append(i)
+            print("After = ")
+            for index in indexes:
+                print(text[index + len(toscan)])
+        elif i == "load":
+            stringtemp = input("Text: ")
+        elif i == "k":
+            ConversionDict = getKeywordDictionary(fixKey(input("Key: ").lower()))
+            print(Decrypt(stringtemp,ConversionDict))
+        elif i == "keysearch":
+            text = input("Text: ")
+            keys = input("KeySearch: ")
+            used = list()
+            key_optionz = text.split(" ")
+            key_options = list()
+            #Remove Doubles
+            for i in range(len(key)):
+                v = key_options.trim()
+                bl = True
+                for z in used:
+                    if z == v:
+                        bl = False
+                if bl:
+                    key_options.append(v)
+                    used.append(v)
+                
+            #STUFF
+            for k in key_options:
+                print("Key @" + k + " ;;> \n" + Decrypt(text,getKeywordDictionary(fixKey(k).lower())))
+            
             #########################################################END OF HOOKS############################
         elif i == "deaffine":
             to = input("decrypt: ")

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.oly.lexical.analysis.LexicalAnalyser;
 import com.oly.util.Logger;
+import com.oly.util.Maths;
 
 public class KeyDecrypter {
 
@@ -52,7 +53,7 @@ public class KeyDecrypter {
 		for(char c : map.keySet()) {
 			amounts *= map.get(c).length();
 		}
-		if(amounts > Integer.MAX_VALUE) {
+		if(amounts > (((long)Integer.MAX_VALUE) * 128 )) {
 			Logger.instance.SEVERE("[DecryptAll] Too many perms");
 			Logger.instance.SEVERE(amounts + ">" + Integer.MAX_VALUE);
 			return outputs;
@@ -72,7 +73,8 @@ public class KeyDecrypter {
 		for(char c : map.keySet()) {
 			amounts *= map.get(c).length();
 		}
-		if(amounts > Integer.MAX_VALUE) {
+		
+		if(amounts > Long.MAX_VALUE) {
 			Logger.instance.SEVERE("[DecryptAll] Too many perms");
 			Logger.instance.SEVERE(amounts + ">" + Integer.MAX_VALUE);
 			return outputs;
@@ -91,7 +93,7 @@ public class KeyDecrypter {
 	
 	private static Map<Character,Character> getNthMap(Map<Character,String> map, long num) {
 		Map<Character,Character> result = new HashMap<Character,Character>();
-		int temp = 1;//WHAT IS USED FOR THE MODULUS
+		long temp = 1;//WHAT IS USED FOR THE MODULUS
 		for(char c : map.keySet()) {
 			result.put(c, map.get(c).charAt((int)((Math.floorDiv(num, temp)) % (map.get(c).length()))));
 			temp *= map.get(c).length();
@@ -132,10 +134,29 @@ public class KeyDecrypter {
 		int q = 0;
 		int z = 0;
 		for(char c : input.toCharArray()) {
-			q = Alphabet.indexOf(key.charAt(i));
-			z = Alphabet.indexOf(c);
-			output = output + Alphabet.charAt((q + z + 1) % 26);
+			q = Alphabet.indexOf(Character.toUpperCase(key.charAt(i)));
+			z = Alphabet.indexOf(Character.toUpperCase(c));
+			if(z == -1) {
+				continue;
+			}
+			//output = output + Alphabet.charAt((((q - z + 1) % 26) + 26));
+			output = output + Alphabet.charAt(Maths.Mod_Clamp(z - q, 26));
+			i++;
+			if( i >= key.length()) {
+				i = 0;
+			}
 		}
+		//int current = 0;
+		//int q = 0;
+		//int 
+		//for(char c : input.toCharArray()) {
+		//	q = Alphabet.indexOf(key.charAt(current));
+		//	
+		//	
+		//	current++;
+		//	current %= key.length();
+		//}
+		
 		output = "POLY="+key+" \n " + output; //ADD KEY INFORMATION
 		return output;
 	}
@@ -201,6 +222,15 @@ public class KeyDecrypter {
 		return results;//TODO shift ferquential analysis till one makes sense
 	}
 	
+	public static List<String> brutePolyOfSizeX(String input, int size) {
+		List<String> results = new ArrayList<String>();
+		for(int j = 0; j <Math.pow(26, size); j++) {
+			String key = getKey(size,j);
+			results.add(decrypt_poly(input, key));
+		}
+		return results;
+	}
+	
 	
 	private static String getSubShiftString(String text, int shift, int size) {
 		String temp = "";
@@ -222,7 +252,7 @@ public class KeyDecrypter {
 		}
 		for(char c : text.toCharArray()) {
 			try{
-			counts[Alphabet.indexOf(Character.toUpperCase(c))] ++;
+				counts[Alphabet.indexOf(Character.toUpperCase(c))] ++;
 			}catch(Exception e) {/**NO OP**/} //HANDLE SYMBOLS
  		}
 		int max = -100;
@@ -238,6 +268,7 @@ public class KeyDecrypter {
 		}
 		return false;
 	}
+	
 	
 	public static String shift(String text,int shifts) {
 		String temp  = text;
@@ -268,10 +299,15 @@ public class KeyDecrypter {
 	
 	private static String getKey(int size,int num) {
 		String output = "";
-		int temp = 26;
+		//int temp = 26;
+		//for(int i = 0; i < size; i++) {
+		//	output = output + Alphabet.charAt(Math.floorDiv(num,temp) % 26);
+		//	temp *= 26;
+		//}
+		int temp = num;
 		for(int i = 0; i < size; i++) {
-			output = output + Alphabet.charAt(num % temp);
-			temp *= 26;
+			output = output + Alphabet.charAt(temp % 26);
+			temp = Math.floorDiv(temp, 26);
 		}
 		return output;
 	}
