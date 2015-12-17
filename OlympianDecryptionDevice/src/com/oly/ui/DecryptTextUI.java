@@ -36,6 +36,7 @@ import com.oly.threading.LexicalAnalysisTask;
 import com.oly.threading.SmartThread;
 import com.oly.threading.TranspositionBruteTask;
 import com.oly.util.Logger;
+import com.oly.web.WebScraper;
 
 
 /**
@@ -101,6 +102,10 @@ public class DecryptTextUI {
 	public JCheckBox results_use_filtered;
 	public JTextArea results_data;
 	
+	//WRAPPED SHIZZLE
+	public DecryptTextUI(int num,char type) {
+		this("Challenge " + num +type,WebScraper.getChallenge(num,type));
+	}
 	
 	public DecryptTextUI(String title,String cypher) {
 		this.cypher = cypher;

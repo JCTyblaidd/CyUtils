@@ -19,26 +19,30 @@ public class Permutator<OBJ> implements Iterator<OBJ[]>{
 		this.data = data;
 		iteration = 0;
 		calculated = new ArrayList<OBJ[]>();
-		gen_permutate(Arrays.copyOf(data,data.length),0);
-		Logger.instance.LOG("Permutator Created {" + calculated.size() + " / " + getArrangementCount());
+		gen_permutate(Arrays.copyOf(data, data.length),0);
+		Logger.instance.LOG("Permutator Created {" + calculated.size() + " / " + getArrangementCount() + "} >> " + data.length);
+		//System.out.println("[PERMUTATOR] Perm Count Guess => " + getArrangementCount() + "//" + data.length);
 	}
 	
-	private void gen_permutate(OBJ[] arr,int k) {
+	private void gen_permutate(OBJ[] arr,int k) {//TODO remove debug code below and tidy
+		//System.out.println("[PERMUTATOR] Genning perms w/ array size =>" + k);
 		//k detemines the location swapping happens to
-		for(int i = k; i < (data.length - 1); i++) { //NB WAS 1
+		for(int i = k; i <= (data.length - 1); i++) { //NB WAS 1
 			//Apply permutations
 			
 			//If k = data.length
-			if(k == data.length) {//ADD
-				calculated.add(Arrays.copyOf(arr, arr.length));
+			if(k == data.length - 1) {//ADD
+				calculated.add(Arrays.copyOf(arr,data.length));
 			}else {//SWAP AND RECURR
 				//SWAP k AND i
 				OBJ ival = arr[i];
 				arr[i] = arr[k];
 				arr[k] = ival;
 				
+				
+				
 				//CALL SPIN OFF FUNCTIONALITY
-				gen_permutate(arr, k - 1);
+				gen_permutate(arr, k + 1);
 			}
 			
 		}
@@ -53,7 +57,8 @@ public class Permutator<OBJ> implements Iterator<OBJ[]>{
 	
 	@Override
 	public boolean hasNext() {
-		return iteration < getArrangementCount();
+		//return iteration < getArrangementCount();
+		return iteration < calculated.size();
 	}
 
 	@Override
@@ -63,10 +68,12 @@ public class Permutator<OBJ> implements Iterator<OBJ[]>{
 	}
 	
 	
-	public int getArrangementCount() {
-		int output = data.length;
-		for(int i = data.length; i > 1; i--) {
-			output = output * data.length;
+	public int getArrangementCount() {//N! permutations
+		int output = 1;
+		int temp = data.length;
+		while(temp > 1) {
+			output = output * temp;
+			temp--;
 		}
 		return output;
 	}

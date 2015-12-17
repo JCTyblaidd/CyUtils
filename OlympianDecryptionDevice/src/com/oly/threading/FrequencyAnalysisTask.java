@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.swing.JTable;
 
 import com.oly.decryption.analysis.FrequencyAnalyser;
+import com.oly.decryption.bruteforce.BRUTEFORCEEVERYTHING;
 import com.oly.decryption.key.KeyDecrypter;
 import com.oly.ui.DecryptTextUI;
 import com.oly.util.Logger;
@@ -15,7 +16,6 @@ import com.oly.util.Logger;
 
 
 public class FrequencyAnalysisTask implements Runnable{
-	
 	
 	public DecryptTextUI linked;
 	public FrequencyAnalyser freq;
@@ -52,6 +52,17 @@ public class FrequencyAnalysisTask implements Runnable{
 		//linked.poss_dirty_freq = true;
 		//Logger.instance.INFO("Frequency Analysis Task finished");
 		//FINISHED
+		
+		
+		
+		//TERRIBLE HOOK INS
+		List<String> strs = BRUTEFORCEEVERYTHING.RUN(text, false, false, true, false);
+		linked.possibilities_trans.addAll(strs);
+		linked.poss_dirty_trans = true;
+		
+		
+		
+		
 		Logger.instance.INFO("==> INITTING FREQ ANALYSIS DECRYPTION");
 		//NOPE
 		//List<String> results = KeyDecrypter.getAllowedDecryptions(guesses, text, 0.19f);
@@ -61,10 +72,15 @@ public class FrequencyAnalysisTask implements Runnable{
 		linked.possibilities_freq.addAll(results);
 		//linked.possibilities_freq.addAll(screwu);
 		linked.poss_dirty_freq = true;
+		Logger.instance.INFO("==> INITIATING POLYALPHABETIC ATTACKING!");
 		List<String> results2 = KeyDecrypter.smart_brute_polyalphabet(text);
 		List<String> temp = KeyDecrypter.brutePolyOfSizeX(text, 2);
+		List<String> temp2 = KeyDecrypter.brutePolyOfSizeX(text, 3);
+		//List<String> temp3 = KeyDecrypter.brutePolyOfSizeX(text, 4);//SMALL SIZES
 		linked.possibilities_poly.addAll(results2);
 		linked.possibilities_poly.addAll(temp);
+		linked.possibilities_poly.addAll(temp2);
+		//linked.possibilities_poly.addAll(temp3);
 		linked.poss_dirty_poly = true;
 	}
 	

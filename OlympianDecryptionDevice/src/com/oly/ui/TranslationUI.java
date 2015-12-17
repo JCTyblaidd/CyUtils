@@ -7,7 +7,6 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextPane;
 
 public class TranslationUI {
 	
@@ -16,6 +15,7 @@ public class TranslationUI {
 	public JScrollPane scroll;
 	
 	
+	@SuppressWarnings("unused")
 	public TranslationUI(String str) {
 		frame = new JFrame("Translation");
 		output = new JTextArea();

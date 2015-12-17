@@ -20,7 +20,8 @@ public class TranspositionBruteTask implements Runnable{
 
 	@Override
 	public void run() {
-		List<String> results = RailDecrypter.bruteForceTransposition(text);
+	//	List<String> results = RailDecrypter.bruteForceTransposition(text);
+		List<String> results = RailDecrypter.bruteForceTranspositionLimited(text,8);
 		linked.possibilities_trans.addAll(results);
 		linked.poss_dirty_trans = true;
 		Logger.instance.INFO("Transpotition Decryption Task finished");

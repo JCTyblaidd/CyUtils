@@ -110,9 +110,18 @@ public class WebScraper {
 	
 	//Type must be uppercase
 	public static String getChallenge(int number,char type) {
+		//LOCAL CACHE SUPPORT
+		if(LocalCacher.hasCache(number, type)) {
+			String str = LocalCacher.getCache(number, type);
+			if(str != null) {
+				return str;
+			}
+		}
 		String address = "http://www.cipher.maths.soton.ac.uk/media/com_cipher/scripts/"
 				+ "challenge.php?number=" + number + "&part=" + type + "&ml=1";
-		return kill_html_tags(read_page(address));
+		String challenge_text =  kill_html_tags(read_page(address));
+		LocalCacher.saveCache(number, type, challenge_text);
+		return challenge_text;
 	}
 	
 	

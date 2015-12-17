@@ -297,7 +297,8 @@ public class KeyDecrypter {
 		return results;
 	}
 	
-	private static String getKey(int size,int num) {
+	//GETS THE NTH KEY STRING OF A CERTAIN SIZE
+	public static String getKey(int size,int num) {
 		String output = "";
 		//int temp = 26;
 		//for(int i = 0; i < size; i++) {
@@ -311,4 +312,5 @@ public class KeyDecrypter {
 		}
 		return output;
 	}
+	
 }

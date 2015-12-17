@@ -28,5 +28,13 @@ public class Maths {
 	}
 	
 	
-	
+	public static int nthPow(int val) {
+		int temp = val;
+		int output = 1;
+		while(temp > 1) {
+			output *= temp;
+			temp ++;
+		}
+		return output;
+	}
 }
